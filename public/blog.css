@@ -1,0 +1,105 @@
+/**
+ * @license MIT, https://opensource.org/license/MIT
+ */
+
+.blog .blog-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.blog .first,
+.blog .second {
+    width: 100%;
+}
+
+.blog .second {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.blog .blog-item {
+    --pico-text-decoration: none;
+}
+
+.blog img {
+    display: block;
+    aspect-ratio: 5 / 3;
+    object-fit: cover;
+    width: 100%;
+}
+
+.blog .date {
+    color: var(--pico-contrast);
+    font-size: 80%;
+}
+
+.blog h3 {
+    font-size: 150%;
+    margin-top: 1rem;
+    height: 3.75rem;
+    overflow: hidden;
+}
+
+.blog .first .content {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+}
+
+.blog .first .date-day {
+    font-weight: bold;
+    font-size: 200%;
+    line-height: 1;
+}
+
+.blog .first .date-month {
+    text-transform: uppercase;
+    font-size: 90%;
+    line-height: 0.75;
+}
+
+.blog .first h3 {
+    flex-grow: 1;
+}
+
+.blog .second .blog-item {
+    display: flex;
+    gap: 1rem;
+}
+
+.blog .second picture {
+    flex: 2;
+}
+
+.blog .second .content {
+    flex: 3;
+}
+
+.blog .second h3 {
+    font-size: 100%;
+    margin: 0.5rem 0;
+    line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+    .blog .blog-items {
+        flex-direction: row;
+    }
+
+    .blog .first,
+    .blog .second {
+        width: 50%;
+    }
+
+    .blog .first h3 {
+        height: 7.25rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .blog .first h3 {
+        height: 5.5rem;
+    }
+}
