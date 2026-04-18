@@ -75,6 +75,7 @@
                 },
                 "file": {
                     "type": "image",
+                    "label": "image",
                     "required": true
                 },
                 "position": {
@@ -105,10 +106,13 @@
                 },
                 "files": {
                     "type": "images",
-                    "min": 1
+                    "label": "images",
+                    "min": 2
                 },
                 "main": {
-                    "type": "checkbox"
+                    "type": "switch",
+                    "label": "load immediately",
+                    "default": false
                 }
             }
         },
@@ -176,7 +180,7 @@
                 },
                 "text": {
                     "type": "plaintext",
-                    "class": "ltr",
+                    "label": "source code",
                     "min": 1
                 }
             }
@@ -210,7 +214,8 @@
                     ]
                 },
                 "table": {
-                    "type": "table"
+                    "type": "table",
+                    "label": "table"
                 }
             }
         },
@@ -220,6 +225,7 @@
             "fields": {
                 "text": {
                     "type": "html",
+                    "label": "source code",
                     "min": 1
                 }
             }
@@ -234,6 +240,7 @@
                 },
                 "main": {
                     "type": "switch",
+                    "label": "load immediately",
                     "default": false
                 }
             }
@@ -276,6 +283,9 @@
                     "type": "string",
                     "min": 1
                 },
+                "subtitle": {
+                    "type": "string"
+                },
                 "text": {
                     "type": "markdown"
                 },
@@ -283,9 +293,11 @@
                     "type": "url"
                 },
                 "button": {
-                    "type": "string",
-                    "min": 1,
-                    "max": 255
+                    "type": "string"
+                },
+                "file": {
+                    "type": "image",
+                    "label": "image"
                 }
             }
         },
@@ -304,7 +316,8 @@
                             "min": 1
                         },
                         "file": {
-                            "type": "image"
+                            "type": "image",
+                            "label": "image"
                         },
                         "text": {
                             "type": "text"
@@ -319,13 +332,13 @@
             "fields": {
                 "text": {
                     "type": "text",
-                    "label": "Introduction",
+                    "label": "introduction",
                     "min": 1,
                     "max": 1000
                 },
                 "file": {
                     "type": "image",
-                    "label": "Image"
+                    "label": "image"
                 }
             }
         },
@@ -347,6 +360,23 @@
                     "list-key": "pages/data",
                     "item-title": "title",
                     "item-value": "id"
+                },
+                "order": {
+                    "type": "select",
+                    "options": [
+                        {
+                            "value": "_lft",
+                            "label": "Position"
+                        },
+                        {
+                            "value": "-created_at",
+                            "label": "Latest"
+                        },
+                        {
+                            "value": "created_at",
+                            "label": "Oldest"
+                        }
+                    ]
                 },
                 "limit": {
                     "type": "number",
@@ -396,9 +426,7 @@
             "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 19C13 18.66 13.04 18.33 13.09 18H4V8L12 13L20 8V13.09C20.72 13.21 21.39 13.46 22 13.81V6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H13.09C13.04 19.67 13 19.34 13 19M20 6L12 11L4 6H20M20 22V20H16V18H20V16L23 19L20 22Z\" /></svg>",
             "fields": {
                 "title": {
-                    "type": "string",
-                    "min": 1,
-                    "max": 255
+                    "type": "string"
                 }
             }
         }
@@ -411,7 +439,7 @@
                 "description": {
                     "type": "string",
                     "min": 1,
-                    "max": 180
+                    "max": 160
                 },
                 "keywords": {
                     "type": "string",
@@ -426,14 +454,15 @@
                 "title": {
                     "type": "string",
                     "min": 1,
-                    "max": 255
+                    "max": 60
                 },
                 "description": {
                     "type": "string",
-                    "max": 255
+                    "max": 160
                 },
                 "file": {
-                    "type": "image"
+                    "type": "image",
+                    "label": "image"
                 }
             }
         },
