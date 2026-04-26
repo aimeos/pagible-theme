@@ -203,12 +203,10 @@ if( !function_exists( 'cmsviews' ) )
      */
     function cmsviews( \Aimeos\Cms\Models\Page $page, object $item ) : array
     {
-        if( !isset( $item->type ) ) {
-            return ['cms::invalid'];
-        }
-
-        $type = str_contains( $item->type, '::' ) ? $item->type : 'cms::' . $item->type;
-
-        return [$type, 'cms::invalid'];
+        return isset( $item->type ) ? [
+            $item->type,
+            (cms($page, 'theme') ?: 'cms') . '::' . $item->type,
+            'cms::invalid'
+        ] : ['cms::invalid'];
     }
 }
