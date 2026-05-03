@@ -462,7 +462,7 @@
                             "label": "Description"
                         },
                         "features": {
-                            "type": "markdown",
+                            "type": "markdown"
                         },
                         "success": {
                             "type": "url",
