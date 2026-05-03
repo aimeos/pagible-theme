@@ -241,3 +241,7 @@
     background: var(--pico-background-color);
     color: var(--pico-color);
 }
+
+.pricing .highlight .btn:hover:after {
+    background-color: var(--pico-color);
+}
