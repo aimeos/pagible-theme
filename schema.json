@@ -479,6 +479,10 @@
                             "type": "switch",
                             "label": "Highlighted",
                             "default": false
+                        },
+                        "badge": {
+                            "type": "string",
+                            "label": "Highlight text"
                         }
                     }
                 }

@@ -28,8 +28,8 @@
 			data-unit-alternative="{{ @$item->{'unit-alternative'} }}"
 			data-priceid-alternative="{{ @$item->{'priceid-alternative'} }}">
 
-			@if(@$item->highlight)
-				<div class="badge">{{ __('Most Popular') }}</div>
+			@if(@$item->badge)
+				<div class="badge">{{ $item->badge }}</div>
 			@endif
 
 			@if($file = cms($files, @$item->file?->id))
