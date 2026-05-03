@@ -62,8 +62,9 @@
 .pricing .pricing-list {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
     align-items: stretch;
+    padding: 1rem 0;
+    gap: 1.5rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -226,13 +227,17 @@
     background: var(--pico-muted-border-color);
 }
 
-.pricing .highlight .btn,
-.pricing .highlight .btn:after {
+.pricing .highlight .btn {
     color: var(--pico-primary);
     background: var(--pico-primary-inverse);
     border-color: var(--pico-primary-inverse);
 }
 
+.pricing .highlight .btn:after {
+    background-color: var(--pico-primary);
+}
+
 .pricing .highlight .btn:hover {
-    background: color-mix(in srgb, var(--pico-primary-inverse) 85%, transparent);
+    background: var(--pico-background-color);
+    color: var(--pico-color);
 }
