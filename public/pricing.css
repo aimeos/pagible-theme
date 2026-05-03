@@ -93,7 +93,7 @@
 }
 
 .pricing .pricing-item.highlight {
-    background-color: var(--pico-primary);
+    background-color: var(--pico-primary-background);
     color: var(--pico-primary-inverse);
     border-color: var(--pico-primary);
     margin: -1rem 0;
@@ -106,8 +106,8 @@
     top: -0.75rem;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--pico-secondary);
-    color: var(--pico-secondary-inverse);
+    background: var(--pico-primary);
+    color: var(--pico-primary-inverse);
     padding: 0.2rem 0.75rem;
     font-size: 0.8rem;
     font-weight: 500;
@@ -226,9 +226,10 @@
     background: var(--pico-muted-border-color);
 }
 
-.pricing .highlight .btn {
-    background: var(--pico-primary-inverse);
+.pricing .highlight .btn,
+.pricing .highlight .btn:after {
     color: var(--pico-primary);
+    background: var(--pico-primary-inverse);
     border-color: var(--pico-primary-inverse);
 }
 
