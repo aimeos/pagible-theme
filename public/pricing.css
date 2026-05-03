@@ -9,14 +9,14 @@
 .pricing .subtitle {
     text-align: center;
     color: var(--pico-muted-color);
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .pricing .pricing-toggle {
     position: relative;
     display: flex;
     width: fit-content;
-    margin: 0 auto 2rem;
+    margin: 0 auto 3rem;
     padding: 0.25rem;
     background: var(--pico-muted-border-color);
     border-radius: 9999px;
@@ -106,8 +106,8 @@
     top: -0.75rem;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--pico-primary-background);
-    color: var(--pico-primary-inverse);
+    background: var(--pico-secondary);
+    color: var(--pico-secondary-inverse);
     padding: 0.2rem 0.75rem;
     font-size: 0.8rem;
     font-weight: 500;
