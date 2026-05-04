@@ -176,8 +176,13 @@ header nav > ul:not(.menu) > li {
 
 header nav > ul > li:last-of-type a {
     background-image: linear-gradient(90deg, var(--pico-primary), var(--pico-secondary));
+    padding: 0.25rem 1rem;
     border-radius: 2rem;
     text-wrap: nowrap;
+}
+
+nav details.dropdown {
+    margin: 0;
 }
 
 header nav a,
@@ -186,7 +191,8 @@ header nav details summary {
     align-items: center;
     list-style: none;
     cursor: pointer;
-    padding: 0.25rem 1rem;
+    margin: 0 0.25rem;
+    padding: 0.25rem 0.5rem;
     color: var(--pico-color);
 }
 
