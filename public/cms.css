@@ -157,7 +157,7 @@ body > header {
 
 header nav {
     font-size: calc(var(--pico-font-size) * 1.25);
-    padding: var(--pico-nav-element-spacing-vertical) 0;
+    padding: 1rem 0;
 }
 
 header nav ol,
@@ -168,7 +168,7 @@ header nav li {
 
 header nav > ul > li {
     list-style: none;
-    padding: 0 0.25rem;
+    padding: 0 0.75rem;
 }
 
 header nav > ul:not(.menu) > li {
@@ -177,7 +177,6 @@ header nav > ul:not(.menu) > li {
 
 header nav > ul > li:last-of-type a {
     background-image: linear-gradient(90deg, var(--pico-primary), var(--pico-secondary));
-    padding: 0.5rem 1rem;
     border-radius: 2rem;
     text-wrap: nowrap;
 }
@@ -186,7 +185,7 @@ header nav a,
 header nav details summary {
     list-style: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.25rem 1rem;
     color: var(--pico-color);
 }
 
@@ -197,13 +196,14 @@ header nav details summary::-webkit-details-marker {
 
 header nav details summary::after {
     display: block;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.875rem;
     float: inline-end;
     transform: rotate(0) translateX(.2rem);
     background-image: var(--pico-icon-chevron);
     background-position: right center;
     background-repeat: no-repeat;
-    background-size: 1rem auto;
+    background-size: 1.5rem auto;
     margin-inline-start: .25rem;
     content: "";
 }
@@ -438,26 +438,8 @@ h1, h2, h3, h4 {
     font-weight: normal;
 }
 
-h1 {
-    --pico-typography-spacing-vertical: 3rem;
-    font-size: calc(var(--pico-font-size) * 3.75);
+h1, h2 {
     text-align: center;
-}
-
-h2 {
-    --pico-typography-spacing-vertical: 2.25rem;
-    font-size: calc(var(--pico-font-size) * 2.875);
-    text-align: center;
-}
-
-h3 {
-    --pico-typography-spacing-vertical: 1.75rem;
-    font-size: calc(var(--pico-font-size) * 2.25);
-}
-
-h4 {
-    --pico-typography-spacing-vertical: 1.33rem;
-    font-size: calc(var(--pico-font-size) * 1.75);
 }
 
 img {
