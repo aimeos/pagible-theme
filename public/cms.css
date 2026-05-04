@@ -156,8 +156,7 @@ body > header {
 }
 
 header nav {
-    font-size: calc(var(--pico-font-size) * 1.25);
-    padding: 1rem 0;
+    padding: 0.75rem 0;
 }
 
 header nav ol,
@@ -168,7 +167,7 @@ header nav li {
 
 header nav > ul > li {
     list-style: none;
-    padding: 0 0.75rem;
+    padding: 0 0.25rem;
 }
 
 header nav > ul:not(.menu) > li {
@@ -183,6 +182,8 @@ header nav > ul > li:last-of-type a {
 
 header nav a,
 header nav details summary {
+    display: flex;
+    align-items: center;
     list-style: none;
     cursor: pointer;
     padding: 0.25rem 1rem;
