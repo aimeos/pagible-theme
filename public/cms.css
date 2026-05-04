@@ -4,7 +4,6 @@
 
 :root, :root:not([data-theme=dark]) {
     --pico-font-family-sans-serif:  "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Arial, sans-serif;
-    --pico-nav-breadcrumb-divider: '>';
     --pico-block-spacing-vertical: 0;
     --pico-nav-element-spacing-horizontal: 1rem;
     --pico-nav-element-spacing-vertical: 0.75rem;
@@ -77,7 +76,6 @@ body {
     scroll-behavior: smooth;
     font-family: var(--pico-font-family-sans-serif);
     background-color: var(--pico-background-color);
-    color: var(--pico-color);
     background-image:
         radial-gradient(
             circle at 100% 40rem,
@@ -447,10 +445,6 @@ h1, h2, h3, h4 {
 
 h1, h2 {
     text-align: center;
-}
-
-img {
-    max-width: 100%;
 }
 
 .btn {
