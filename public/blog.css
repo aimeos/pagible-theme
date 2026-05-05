@@ -51,7 +51,6 @@
     margin-top: 0.75rem;
     height: 3.75rem;
     overflow: hidden;
-    line-height: 1.3;
 }
 
 .blog .first .content {
@@ -64,14 +63,12 @@
 .blog .first .date-day {
     font-weight: 600;
     font-size: calc(var(--pico-font-size) * 1.1);
-    line-height: 1;
     font-family: var(--pico-font-family-display);
 }
 
 .blog .first .date-month {
     text-transform: uppercase;
     font-size: calc(var(--pico-font-size) * 0.6);
-    line-height: 0.75;
     letter-spacing: 0.05em;
 }
 
@@ -96,7 +93,6 @@
 .blog .second h3 {
     font-size: var(--pico-font-size);
     margin: 0.5rem 0;
-    line-height: 1.3;
 }
 
 @media (min-width: 768px) {
@@ -107,15 +103,5 @@
     .blog .first,
     .blog .second {
         width: 50%;
-    }
-
-    .blog .first h3 {
-        height: 7.25rem;
-    }
-}
-
-@media (min-width: 992px) {
-    .blog .first h3 {
-        height: 5.5rem;
     }
 }

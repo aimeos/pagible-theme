@@ -78,7 +78,7 @@
     display: block;
     margin-inline-end: auto;
     margin-inline-start: auto;
-    border-radius: var(--pico-border-radius);
+    border-radius: 9999px;
 }
 
 .contact button:disabled {
