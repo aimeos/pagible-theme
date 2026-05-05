@@ -113,7 +113,6 @@ nav li :where(a,[role=link]) {
 
 body > header {
     max-width: 1280px;
-    border-bottom: 1px solid var(--pico-muted-border-color);
     padding: 1rem 2rem;
     position: relative;
     margin: auto;
@@ -204,7 +203,7 @@ header nav .brand img {
 
 header nav .brand a {
     font-family: var(--pico-font-family-display);
-    font-weight: 600;
+    font-weight: 700;
     font-size: calc(var(--pico-font-size) * 0.9);
     letter-spacing: -0.02em;
     color: var(--pico-contrast);
@@ -466,7 +465,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, h2, h3 {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 h4, h5, h6 {
@@ -514,7 +513,7 @@ img {
     line-height: inherit;
     font-family: var(--pico-font-family-display);
     font-size: calc(var(--pico-font-size) * 0.8);
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0;
     border: 1px solid var(--pico-muted-border-color);
     border-radius: 9999px;

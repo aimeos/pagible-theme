@@ -3,11 +3,8 @@
  */
 
 .swiffy-slider {
-	border: 1px solid var(--pico-muted-border-color);
 	border-radius: calc(var(--pico-border-radius) * 2);
-	box-shadow: var(--pico-box-shadow);
 	overflow: hidden;
-	padding: 0.5rem;
 }
 
 .slider-container {

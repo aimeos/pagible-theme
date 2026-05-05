@@ -35,7 +35,7 @@
     margin-top: 0;
     margin-bottom: 1.5rem;
     font-size: calc(var(--pico-font-size) * 3);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.04em;
 }
