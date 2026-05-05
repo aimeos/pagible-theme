@@ -36,15 +36,11 @@
 }
 
 .blog h3 {
-    font-size: calc(var(--pico-font-size) * 1.5);
-    height: 4.25rem;
-    overflow: hidden;
     margin: 0;
 }
 
 .blog .first .content {
     display: flex;
-    align-items: center;
     margin: 1rem 0.5rem;
     gap: 2rem;
 }
