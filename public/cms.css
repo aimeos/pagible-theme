@@ -595,7 +595,6 @@ pre:has(code[class*="language-"]) {
 
 footer.copyright {
     background-color: var(--pico-background-color);
-    border-top: 1px solid var(--pico-muted-border-color);
     color: var(--pico-muted-color);
     font-size: calc(var(--pico-font-size) * 0.65);
     margin-top: 0;
@@ -625,7 +624,7 @@ footer.copyright .brand {
 }
 
 footer.copyright .brand img {
-    height: 7.5rem;
+    height: 3.75rem;
     opacity: 0.4;
     vertical-align: middle;
 }
@@ -669,6 +668,7 @@ footer.cms-content .cards .title {
 
 footer.cms-content .cards .text {
     color: var(--pico-muted-color);
+    font-size: calc(var(--pico-font-size) * 0.7);
 }
 
 footer.cms-content .cards .text p {
@@ -686,7 +686,7 @@ footer.cms-content .cards .text a:hover {
     color: var(--pico-contrast);
 }
 
-footer.cms-content .cards .text ul {
+footer.cms-content .text ul {
     padding-left: 0;
     list-style: none;
 }
