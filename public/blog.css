@@ -5,7 +5,7 @@
 .blog .blog-items {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .blog .first,
@@ -16,7 +16,7 @@
 .blog .second {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .blog .blog-item {
@@ -58,12 +58,13 @@
 }
 
 .blog .first h3 {
+    font-size: calc(var(--pico-font-size) * 1.1);
     flex-grow: 1;
 }
 
 .blog .second .blog-item {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .blog .second picture {
@@ -75,8 +76,7 @@
 }
 
 .blog .second h3 {
-    font-size: var(--pico-font-size);
-    margin: 0.5rem 0;
+    font-size: calc(var(--pico-font-size) * 0.9);
     line-height: 1.25;
 }
 
