@@ -37,14 +37,15 @@
 
 .blog h3 {
     font-size: calc(var(--pico-font-size) * 1.5);
-    margin-top: 1rem;
-    height: 3.75rem;
+    height: 4.25rem;
     overflow: hidden;
+    margin: 0;
 }
 
 .blog .first .content {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    margin: 1rem 0.5rem;
     gap: 2rem;
 }
 
@@ -66,7 +67,7 @@
 
 .blog .second .blog-item {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .blog .second picture {
@@ -91,15 +92,5 @@
     .blog .first,
     .blog .second {
         width: 50%;
-    }
-
-    .blog .first h3 {
-        height: 7.25rem;
-    }
-}
-
-@media (min-width: 992px) {
-    .blog .first h3 {
-        height: 5.5rem;
     }
 }
