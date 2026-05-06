@@ -1,5 +1,5 @@
 @pushOnce('foot')
-<link href="{{ cmstheme($page, 'table.css') }}" rel="preload" as="style">
+<link href="{{ cmstheme($page, 'table.css') }}" rel="stylesheet">
 @endPushOnce
 
 @if(@$data->title)

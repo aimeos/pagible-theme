@@ -1,5 +1,5 @@
-@pushOnce('foot')
-<link href="{{ cmstheme($page, 'slideshow.css') }}" rel="preload" as="style">
+@pushOnce('head')
+<link href="{{ cmstheme($page, 'slideshow.css') }}" rel="stylesheet">
 @endPushOnce
 
 @pushOnce('foot')

@@ -1,5 +1,5 @@
-@pushOnce('head')
-<link href="{{ cmstheme($page, 'article.css') }}" rel="stylesheet">
+@pushOnce('foot')
+<link rel="preload" href="{{ cmstheme($page, 'article.css') }}" as="style">
 @endPushOnce
 
 <h1 class="title">{{ cms($page, 'title') }}</h1>
