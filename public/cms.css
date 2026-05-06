@@ -593,68 +593,24 @@ pre:has(code[class*="language-"]) {
 }
 
 
-footer.copyright {
-    background-color: var(--pico-background-color);
-    color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.65);
-    margin-top: 0;
-}
-
-footer.copyright .container {
-    max-width: 1280px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-footer.cms-content + footer.copyright {
-    margin-top: 0;
-}
-
-footer.cms-content + footer.copyright .container {
-    border-top: 1px solid var(--pico-muted-border-color);
-}
-
-footer.copyright .brand {
-    display: inline;
-    margin-inline-end: 0.5rem;
-    user-select: none;
-    vertical-align: middle;
-}
-
-footer.copyright .brand img {
-    height: 3.75rem;
-    opacity: 0.4;
-    vertical-align: middle;
-}
-
 footer.cms-content {
     background-color: var(--pico-background-color);
-    padding: 4rem 0 2rem;
+    padding: 2rem 0;
 }
 
 footer.cms-content .container {
+    padding: 0;
+    padding-top: 2rem;
     max-width: 1280px;
 }
 
 footer.cms-content .cards .card-list {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: 2fr 1fr;
+    justify-self: normal;
 }
 
 footer.cms-content .cards .card-item {
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
     padding: 0;
-    text-align: start;
-}
-
-footer.cms-content .cards .card-item:hover {
-    box-shadow: none;
-    transform: none;
 }
 
 footer.cms-content .cards .title {
@@ -676,18 +632,16 @@ footer.cms-content .cards .text p {
     margin: 0;
 }
 
-footer.cms-content .cards .text a,
-footer.cms-content .cards .text a:visited {
-    color: var(--pico-muted-color);
-    text-decoration: none;
-}
-
 footer.cms-content .cards .text a:hover {
     color: var(--pico-contrast);
 }
 
-footer.cms-content .text ul {
+footer.cms-content ul {
     padding-left: 0;
+    list-style: none;
+}
+
+footer.cms-content ul li {
     list-style: none;
 }
 
@@ -704,10 +658,27 @@ footer.cms-content .text {
 footer.cms-content a,
 footer.cms-content a:visited {
     color: var(--pico-muted-color);
+    text-decoration: none;
 }
 
 footer.cms-content a:hover {
     color: var(--pico-contrast);
+}
+
+footer.bottom {
+    color: var(--pico-muted-color);
+    background-color: var(--pico-background-color);
+    border-top: 1px solid var(--pico-muted-border-color);
+    font-size: calc(var(--pico-font-size) * 0.65);
+    margin: 0;
+}
+
+footer.bottom .container {
+    max-width: 1280px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media screen and (min-width: 768px) {
