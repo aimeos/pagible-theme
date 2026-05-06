@@ -1,5 +1,5 @@
 @pushOnce('foot')
-<link rel="preload" href="{{ cmstheme($page, 'questions.css') }}" as="style">
+<link href="{{ cmstheme($page, 'questions.css') }}" rel="preload" as="style">
 @endPushOnce
 
 <h2 class="title">{{ cms($data, 'title') }}</h2>

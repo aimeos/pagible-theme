@@ -1,5 +1,5 @@
 @pushOnce('foot')
-<link rel="preload" href="{{ cmstheme($page, 'contact.css') }}" as="style">
+<link href="{{ cmstheme($page, 'contact.css') }}" rel="preload" as="style">
 <script defer src="{{ cmstheme($page, 'contact.js') }}"></script>
 @endPushOnce
 

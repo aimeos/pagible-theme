@@ -1,5 +1,5 @@
 @pushOnce('foot')
-<link href="{{ cmstheme($page, 'video.css') }}" rel="stylesheet">
+<link href="{{ cmstheme($page, 'video.css') }}" rel="preload" as="style">
 @endPushOnce
 
 @pushOnce('foot:caption')

@@ -1,5 +1,5 @@
 @pushOnce('foot', 'css:image')
-<link href="{{ cmstheme($page, 'image.css') }}" rel="stylesheet">
+<link href="{{ cmstheme($page, 'image.css') }}" rel="preload" as="style">
 @endPushOnce
 
 @if($file = cms($files, @$data->file?->id))

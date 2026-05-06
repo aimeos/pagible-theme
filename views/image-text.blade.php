@@ -1,8 +1,8 @@
 @pushOnce('foot', 'css:image')
-<link href="{{ cmstheme($page, 'image.css') }}" rel="stylesheet">
+<link href="{{ cmstheme($page, 'image.css') }}" rel="preload" as="style">
 @endPushOnce
 @pushOnce('foot')
-<link href="{{ cmstheme($page, 'image-text.css') }}" rel="stylesheet">
+<link href="{{ cmstheme($page, 'image-text.css') }}" rel="preload" as="style">
 @endPushOnce
 
 <div class="{{ @$data->position ?? 'start' }} r{{ @$data->ratio ?? '1-3' }}">
