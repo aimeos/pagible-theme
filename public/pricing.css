@@ -55,7 +55,7 @@
     position: absolute;
     inset: 0.25rem;
     width: calc(50% - 0.25rem);
-    background: var(--pico-background-color, #fff);
+    background: var(--pico-background-color, #FFFFFF);
     border-radius: calc(var(--pico-border-radius) * 0.75);
     box-shadow: var(--pico-box-shadow);
     transition: transform 0.2s;
@@ -99,11 +99,11 @@
 .pricing .pricing-item.highlight {
     background-color: var(--pico-contrast);
     color: var(--pico-contrast-inverse);
-    border-color: transparent;
+    border-color: #00000000;
     margin: -1rem 0;
     padding-top: 3rem;
     padding-bottom: 3rem;
-    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px -12px #00000033;
 }
 
 .pricing .badge {
@@ -137,7 +137,7 @@
 }
 
 .pricing .highlight .price {
-    border-bottom-color: rgba(255, 255, 255, 0.2);
+    border-bottom-color: #FFFFFF33;
 }
 
 .pricing .amount {
@@ -153,7 +153,7 @@
 }
 
 .pricing .highlight .unit {
-    color: rgba(255, 255, 255, 0.7);
+    color: #FFFFFFB3;
 }
 
 .pricing .name {
@@ -171,7 +171,7 @@
 }
 
 .pricing .highlight .pricing-header .text {
-    color: rgba(255, 255, 255, 0.7);
+    color: #FFFFFFB3;
 }
 
 .pricing .features {
@@ -222,7 +222,7 @@
     width: 100%;
     text-align: center;
     padding: 0.75rem 1.5rem;
-    background-color: transparent;
+    background-color: #00000000;
     color: var(--pico-contrast);
     border: 1px solid var(--pico-muted-border-color);
     border-radius: 9999px;
@@ -244,6 +244,6 @@
 }
 
 .pricing .highlight .btn:hover {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #FFFFFFE6;
     color: var(--pico-primary);
 }

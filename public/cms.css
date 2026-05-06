@@ -55,13 +55,13 @@
     --pico-h4-color: #1F2937;
     --pico-h5-color: #374151;
     --pico-h6-color: #4B5563;
-    --pico-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --pico-box-shadow: 0 1px 3px #0000000F, 0 1px 2px #0000000A;
     --pico-dropdown-color: var(--pico-contrast);
     --pico-dropdown-border-color: var(--pico-contrast-border);
     --pico-dropdown-background-color: #FFFFFF;
     --pico-dropdown-hover-background-color: var(--pico-muted-background-color);
-    --pico-dropdown-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --pico-modal-overlay-background-color: rgba(17, 24, 39, 0.5);
+    --pico-dropdown-box-shadow: 0 4px 6px -1px #0000001A, 0 2px 4px -2px #0000001A;
+    --pico-modal-overlay-background-color: #11182780;
     --pico-code-background-color: #F3F4F6;
     --pico-code-color: #111827;
     --pico-border-radius: 0.5rem;
@@ -112,7 +112,7 @@ nav li :where(a,[role=link]) {
 }
 
 body > header {
-    max-width: 1280px;
+    max-width: 1200px;
     padding: 1rem 2rem;
     position: relative;
     margin: auto;
@@ -230,14 +230,14 @@ header nav .sidebar-close button {
 header nav .menu a[role=button] {
     background-color: var(--pico-contrast);
     color: var(--pico-contrast-inverse);
-    border-color: transparent;
+    border-color: #00000000;
     border-radius: 9999px;
     margin-inline-start: 0;
 }
 
 header nav .menu a[role=button]:hover {
     background-color: #374151;
-    border-color: transparent;
+    border-color: #00000000;
     color: var(--pico-contrast-inverse);
 }
 
@@ -371,7 +371,7 @@ dialog input {
 
 dialog input:focus-visible {
     border: 1px solid var(--pico-primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 0 3px #3B82F626;
 }
 
 dialog input::-webkit-input-placeholder {
@@ -456,7 +456,7 @@ dialog.search .load-more:disabled {
 
 
 .container {
-    max-width: 1200px !important;
+    max-width: 1200px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -533,7 +533,7 @@ img {
 .btn:first-of-type {
     background-color: var(--pico-contrast);
     color: var(--pico-contrast-inverse);
-    border-color: transparent;
+    border-color: #00000000;
 }
 
 .btn-primary:hover,
@@ -601,7 +601,6 @@ footer.cms-content {
 footer.cms-content .container {
     padding: 0;
     padding-top: 2rem;
-    max-width: 1280px;
 }
 
 footer.cms-content .cards .card-list {
@@ -674,11 +673,11 @@ footer.bottom {
 }
 
 footer.bottom .container {
-    max-width: 1280px;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1.5rem 0;
 }
 
 @media screen and (min-width: 768px) {
