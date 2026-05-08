@@ -194,12 +194,12 @@ header nav .brand img {
 }
 
 header nav .brand a {
+    font-weight: 600;
     font-family: var(--pico-font-family-display);
-    font-weight: 700;
     font-size: calc(var(--pico-font-size) * 0.9);
     letter-spacing: -0.02em;
-    color: var(--pico-contrast);
     text-decoration: none;
+    color: var(--pico-contrast);
 }
 
 header nav .menu-open,
@@ -214,7 +214,7 @@ header nav .menu-close button,
 header nav .sidebar-open button,
 header nav .sidebar-close button {
     color: var(--pico-contrast);
-    padding: 0.75rem;
+    padding: 0.56rem;
     background: none;
     border: none;
 }
@@ -243,11 +243,14 @@ header nav .menu a[role=button]:hover {
         display: block;
         overflow-y: auto;
         position: fixed;
+        padding: 0.5rem 1.5rem;
         background-color: var(--pico-background-color);
         min-height: 100vh;
         z-index: 100;
         width: 100%;
         height: 100%;
+        left: 0;
+        top: 0;
     }
 
     header nav .menu {
