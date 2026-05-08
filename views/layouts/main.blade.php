@@ -107,7 +107,7 @@
             </article>
         </dialog>
         <header>
-            <nav>
+            <nav role="navigation" aria-label="{{ __('Main navigation') }}">
                 <ul>
                     <li class="sidebar-open show">
                         <button aria-label="{{ __('Open sidebar') }}">
@@ -143,7 +143,7 @@
                         </button>
                     </li>
                 </ul>
-                <ul class="menu">
+                <ul class="menu" role="menu">
                     <li>
                         <a href="#" class="search" data-modal="modal-search" title="{{ __('Search') }}" aria-label="{{ __('Search') }}" role="menuitem">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
