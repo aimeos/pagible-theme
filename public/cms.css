@@ -3,7 +3,7 @@
  * @license MIT, https://opensource.org/license/MIT
  */
 
-:root {
+:root[data-theme=light] {
     --pico-font-family-sans-serif: ui-sans-serif, sans-serif;
     --pico-font-family-display: var(--pico-font-family-sans-serif);
     --pico-font-family-monospace: ui-monospace, , monospace;
