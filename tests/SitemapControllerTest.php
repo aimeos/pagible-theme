@@ -7,6 +7,7 @@
 
 namespace Tests;
 
+use Database\Seeders\TestSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 
@@ -15,10 +16,10 @@ class SitemapControllerTest extends ThemeTestAbstract
     use CmsWithMigrations;
     use RefreshDatabase;
 
+    protected $seeder = TestSeeder::class;
+
     public function testIndex()
     {
-        $this->seed( \Database\Seeders\CmsSeeder::class );
-
         $controller = new \Aimeos\Cms\Controllers\SitemapController();
 
         ob_start(); // Capture output from stream callback
@@ -43,8 +44,6 @@ class SitemapControllerTest extends ThemeTestAbstract
 
     public function testIndexAsSitemapIndex()
     {
-        $this->seed( \Database\Seeders\CmsSeeder::class );
-
         $controller = new SitemapControllerLowThreshold();
 
         $response = $controller->index();
@@ -53,15 +52,13 @@ class SitemapControllerTest extends ThemeTestAbstract
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('<sitemapindex', $content);
         $this->assertStringContainsString('</sitemapindex>', $content);
-        $this->assertStringContainsString('<loc><![CDATA[http://localhost/sitemap-1.xml]]></loc>', $content);
+        $this->assertStringContainsString('<loc>http://localhost/sitemap-1.xml</loc>', $content);
         $this->assertStringNotContainsString('<urlset', $content);
     }
 
 
     public function testChunk()
     {
-        $this->seed( \Database\Seeders\CmsSeeder::class );
-
         $controller = new SitemapControllerLowThreshold();
 
         ob_start();
@@ -78,8 +75,6 @@ class SitemapControllerTest extends ThemeTestAbstract
 
     public function testChunkOutOfRange()
     {
-        $this->seed( \Database\Seeders\CmsSeeder::class );
-
         $controller = new SitemapControllerLowThreshold();
 
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
