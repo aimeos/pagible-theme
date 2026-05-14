@@ -3,7 +3,7 @@
  */
 
 main {
-    max-width: 80rem;
+    max-width: 1200px;
     margin: auto;
     width: 100%;
 }
@@ -19,7 +19,8 @@ main .container {
 
 main nav.sidebar {
     background: var(--pico-background-color);
-    border-inline-end: 1px solid var(--pico-muted-border-color);
+    background-image: radial-gradient(circle at calc(100% + 10rem) 10rem, var(--pico-primary-background) 0, transparent 20rem);
+    border-inline-end: 1px solid var(--pico-constrast-border);
     transition: left 0.3s ease;
     position: absolute;
     z-index: 95;
@@ -92,19 +93,11 @@ main nav.sidebar .menu .menu li {
 }
 
 main nav.sidebar .active {
-    font-weight: 500;
-    color: var(--pico-primary);
+    font-weight: bold;
 }
 
 main nav.sidebar a {
-    color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.7);
-    transition: color 0.15s ease;
-}
-
-main nav.sidebar a:hover {
-    color: var(--pico-primary);
-    opacity: 1;
+    color: var(--pico-contrast);
 }
 
 main nav.sidebar summary a {
@@ -114,7 +107,7 @@ main nav.sidebar summary a {
 }
 
 main nav.sidebar details.is-menu[open] > summary a {
-    color: var(--pico-contrast);
+    color: var(--pico-contrast-hover);
 }
 
 main nav.sidebar details.is-menu[open] > summary svg {

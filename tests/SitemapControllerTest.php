@@ -17,7 +17,7 @@ class SitemapControllerTest extends ThemeTestAbstract
 
     public function testIndex()
     {
-        $this->seed( \Database\Seeders\TestSeeder::class );
+        $this->seed( \Database\Seeders\CmsSeeder::class );
 
         $controller = new \Aimeos\Cms\Controllers\SitemapController();
 
@@ -43,7 +43,7 @@ class SitemapControllerTest extends ThemeTestAbstract
 
     public function testIndexAsSitemapIndex()
     {
-        $this->seed( \Database\Seeders\TestSeeder::class );
+        $this->seed( \Database\Seeders\CmsSeeder::class );
 
         $controller = new SitemapControllerLowThreshold();
 
@@ -53,14 +53,14 @@ class SitemapControllerTest extends ThemeTestAbstract
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('<sitemapindex', $content);
         $this->assertStringContainsString('</sitemapindex>', $content);
-        $this->assertStringContainsString('<loc>http://localhost/sitemap-1.xml</loc>', $content);
+        $this->assertStringContainsString('<loc><![CDATA[http://localhost/sitemap-1.xml]]></loc>', $content);
         $this->assertStringNotContainsString('<urlset', $content);
     }
 
 
     public function testChunk()
     {
-        $this->seed( \Database\Seeders\TestSeeder::class );
+        $this->seed( \Database\Seeders\CmsSeeder::class );
 
         $controller = new SitemapControllerLowThreshold();
 
@@ -78,7 +78,7 @@ class SitemapControllerTest extends ThemeTestAbstract
 
     public function testChunkOutOfRange()
     {
-        $this->seed( \Database\Seeders\TestSeeder::class );
+        $this->seed( \Database\Seeders\CmsSeeder::class );
 
         $controller = new SitemapControllerLowThreshold();
 

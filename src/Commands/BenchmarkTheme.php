@@ -15,7 +15,6 @@ use Aimeos\Cms\Controllers\PageController;
 use Aimeos\Cms\Controllers\SearchController;
 use Aimeos\Cms\Controllers\SitemapController;
 use Aimeos\Cms\Models\Page;
-use Aimeos\Nestedset\NestedSet;
 
 
 class BenchmarkTheme extends Command
@@ -65,13 +64,13 @@ class BenchmarkTheme extends Command
 
         // Get a page with cache=0 for uncached rendering
         $uncachedPage = Page::where( 'tag', '!=', 'root' )
-            ->where( 'domain', $domain )->orderByDesc( NestedSet::DEPTH )->firstOrFail();
+            ->where( 'domain', $domain )->orderByDesc( 'depth' )->firstOrFail();
         $uncachedPage->forceFill( ['cache' => 0] )->saveQuietly();
 
         // Get a page with cache=5 for cached rendering
         $cachedPage = Page::where( 'tag', '!=', 'root' )
             ->where( 'domain', $domain )->where( 'id', '!=', $uncachedPage->id )
-            ->orderByDesc( NestedSet::DEPTH )->firstOrFail();
+            ->orderByDesc( 'depth' )->firstOrFail();
         $cachedPage->forceFill( ['cache' => 5] )->saveQuietly();
 
         $this->header();

@@ -24,51 +24,27 @@ if( !function_exists( 'cms' ) )
         $parts = explode( '.', $prop );
         $first = array_shift( $parts );
 
-        if( $item instanceof \Illuminate\Support\Collection )
-        {
+        if( $item instanceof \Illuminate\Support\Collection ) {
             $val = $item->get( $first );
         }
-        else if( \Aimeos\Cms\Permission::can( 'page:view', \Illuminate\Support\Facades\Auth::user() ) )
-        {
-            $val = $item->latest?->data->{$first}
-                ?? $item->latest?->aux->{$first}
-                ?? $item->latest->{$first}
-                ?? $item->{$first}
-                ?? null;
+        else if( \Aimeos\Cms\Permission::can( 'page:view', \Illuminate\Support\Facades\Auth::user() ) ) {
+            $val = @$item->latest?->data?->{$first} // @phpstan-ignore-line property.notFound
+                ?? @$item->latest?->aux?->{$first} // @phpstan-ignore-line property.notFound
+                ?? @$item->latest?->{$first} // @phpstan-ignore-line property.notFound
+                ?? @$item->{$first};
         }
-        else
-        {
-            $val = $item->{$first} ?? null;
+        else {
+            $val = @$item->{$first};
         }
 
         foreach( $parts as $part )
         {
-            if( is_object( $val ) && ( $val = $val->{$part} ?? null ) === null ) {
+            if( is_object( $val ) && ( $val = @$val->{$part} ) === null ) {
                 return $default;
             }
         }
 
         return $val ?? $default;
-    }
-}
-
-
-if( !function_exists( 'cmsasset' ) )
-{
-    /**
-     * Generate an asset URL with a version query parameter based on the file's last modification time for cache busting.
-     *
-     * @param string|null $path The path to the asset file
-     * @param bool $version Whether to append a version query parameter based on the file's last modification time for cache busting
-     * @return string The asset URL with a version query parameter, or an empty string if the path is null
-     */
-    function cmsasset( ?string $path, bool $version = true ) : string
-    {
-        if( $path ) {
-            return asset( $path ) . ( $version && file_exists( public_path( $path ) ) ? '?v=' . filemtime( public_path( $path ) ) : '' );
-        }
-
-        return '';
     }
 }
 
@@ -100,12 +76,13 @@ if( !function_exists( 'cmsdata' ) )
     function cmsdata( \Aimeos\Cms\Models\Page $page, object $item ) : array
     {
         if( $item instanceof \Aimeos\Cms\Models\Element ) {
-            $item = (object) ['id' => $item->id, 'type' => $item->type, 'name' => $item->name, 'data' => $item->data];
+            $item = (object) $item->toArray();
         }
 
         $data = ['files' => cms($page, 'files')];
 
-        if( $action = $item->data->action ?? null ) {
+        /** @phpstan-ignore property.notFound */
+        if( $action = @$item->data?->action ) {
             $data['action'] = app()->call( $action, ['page' => $page, 'item' => $item] );
         }
 
@@ -142,7 +119,8 @@ if( !function_exists( 'cmsref' ) )
      */
     function cmsref( \Aimeos\Cms\Models\Page $page, object $item ) : object
     {
-        if(($item->type ?? null) === 'reference' && ($refid = $item->refid ?? null) && ($element = cms(cms($page, 'elements'), $refid))) {
+        // @phpstan-ignore-next-line property.notFound
+        if(@$item->type === 'reference' && ($refid = @$item->refid) && ($element = cms(cms($page, 'elements'), $refid))) {
             return (object) $element;
         }
 
@@ -162,10 +140,10 @@ if( !function_exists( 'cmsroute' ) )
     function cmsroute( \Aimeos\Cms\Models\Page $page ) : string
     {
         if( \Aimeos\Cms\Permission::can( 'page:view', \Illuminate\Support\Facades\Auth::user() ) ) {
-            return $page->latest?->data->to ?? null ?: route( 'cms.page', ['path' => $page->latest?->data->path ?? $page->path] );
+            return @$page->latest?->data?->to ?: route( 'cms.page', ['path' => @$page->latest?->data?->path ?? @$page->path] );
         }
 
-        return $page->to ?: route( 'cms.page', ['path' => $page->path] );
+        return @$page->to ?: route( 'cms.page', ['path' => @$page->path] );
     }
 }
 
@@ -191,29 +169,6 @@ if( !function_exists( 'cmssrcset' ) )
 }
 
 
-if( !function_exists( 'cmstheme' ) )
-{
-    /**
-     * Generate an asset URL for a theme file, falling back to the base theme if the file doesn't exist.
-     *
-     * @param \Aimeos\Cms\Models\Page $page The CMS page to resolve the theme from
-     * @param string $file The filename (e.g. "hero.css", "slideshow.js")
-     * @param bool $version Whether to append a version query parameter based on the file's last modification time for cache busting
-     * @return string The asset URL for the file
-     */
-    function cmstheme( \Aimeos\Cms\Models\Page $page, string $file, bool $version = true ) : string
-    {
-        $themedir = 'vendor/cms/' . ( cms( $page, 'theme' ) ?: 'theme' );
-
-        if( file_exists( public_path( $themedir . '/' . $file ) ) ) {
-            return cmsasset( $themedir . '/' . $file, $version );
-        }
-
-        return cmsasset( 'vendor/cms/theme/' . $file, $version );
-    }
-}
-
-
 if( !function_exists( 'cmsurl' ) )
 {
     /**
@@ -228,7 +183,7 @@ if( !function_exists( 'cmsurl' ) )
             return '';
         }
 
-        if( str_starts_with( $path, 'data:' ) || str_starts_with( $path, 'http' ) ) {
+        if( \Illuminate\Support\Str::startsWith( $path, ['data:', 'http:', 'https:'] ) ) {
             return $path;
         }
 
@@ -248,12 +203,10 @@ if( !function_exists( 'cmsviews' ) )
      */
     function cmsviews( \Aimeos\Cms\Models\Page $page, object $item ) : array
     {
-        if( !isset( $item->type ) ) {
-            return ['cms::invalid'];
-        }
-
-        $type = str_contains( $item->type, '::' ) ? $item->type : 'cms::' . $item->type;
-
-        return [$type, 'cms::invalid'];
+        return isset( $item->type ) ? [
+            $item->type,
+            (cms($page, 'theme') ?: 'cms') . '::' . $item->type,
+            'cms::invalid'
+        ] : ['cms::invalid'];
     }
 }

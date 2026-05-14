@@ -11,7 +11,7 @@ use Aimeos\Cms\Models\Page;
 use Aimeos\Cms\Models\Version;
 use Aimeos\Cms\Resource;
 use Aimeos\Cms\Tenancy;
-use Database\Seeders\TestSeeder;
+use Database\Seeders\CmsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 
@@ -36,7 +36,7 @@ class PageControllerTest extends ThemeTestAbstract
     {
         Tenancy::$callback = fn() => 'demo';
 
-        $this->seed( TestSeeder::class );
+        $this->seed( CmsSeeder::class );
 
         $page = Page::where( 'tag', 'blog' )->firstOrFail();
 
@@ -45,6 +45,7 @@ class PageControllerTest extends ThemeTestAbstract
             $page->id,
             ['path' => 'new-blog-path', 'domain' => $page->domain ?? ''],
             $this->user,
+            'test@example.com',
         );
 
         // Now try to access the page via the new path (as an editor would)
@@ -57,7 +58,7 @@ class PageControllerTest extends ThemeTestAbstract
     {
         Tenancy::$callback = fn() => 'demo';
 
-        $this->seed( TestSeeder::class );
+        $this->seed( CmsSeeder::class );
 
         $page = Page::where( 'tag', 'article' )->firstOrFail();
 
@@ -66,6 +67,7 @@ class PageControllerTest extends ThemeTestAbstract
             $page->id,
             ['path' => 'changed-article-path'],
             $this->user,
+            'test@example.com',
         );
 
         // Try to access via new path
@@ -78,7 +80,7 @@ class PageControllerTest extends ThemeTestAbstract
     {
         Tenancy::$callback = fn() => 'demo';
 
-        $this->seed( TestSeeder::class );
+        $this->seed( CmsSeeder::class );
 
         // Home page has domain='mydomain.tld' in the seeder
         $page = Page::where( 'tag', 'root' )->firstOrFail();
@@ -89,6 +91,7 @@ class PageControllerTest extends ThemeTestAbstract
             $page->id,
             ['path' => 'new-home', 'domain' => $page->domain],
             $this->user,
+            'test@example.com',
         );
 
         // Without multidomain config, the route has no {domain} parameter,
@@ -125,6 +128,7 @@ class PageControllerTest extends ThemeTestAbstract
             $page->id,
             ['path' => 'new-test-page'],
             $this->user,
+            'test@example.com',
         );
 
         // Verify the version data now includes domain
