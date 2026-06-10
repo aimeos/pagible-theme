@@ -48,6 +48,7 @@
     display: block;
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
+    align-content: end;
     text-align: center;
     height: 100%;
     width: 100%;
@@ -56,6 +57,7 @@
 .table-responsive .td p {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 576px) {
