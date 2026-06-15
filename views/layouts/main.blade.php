@@ -3,9 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        @auth
-            <meta name="csrf-token" content="{{ csrf_token() }}">
-        @endauth
+        <meta name="csrf-token" content="%%CMS_CSRF%%">
         @if(!config('app.debug'))
             <meta http-equiv="Content-Security-Policy" content="
                 base-uri 'self';
@@ -14,8 +12,8 @@
                 connect-src 'self' {{ config('cms.theme.csp.connect-src') }};
                 img-src 'self' data: blob: {{ config('cms.theme.csp.media-src') }};
                 media-src 'self' data: blob: {{ config('cms.theme.csp.media-src') }};
-                style-src 'self' {{ config('cms.theme.csp.style-src') }} {!! cmshashes($page, 'config.styles.data.text') !!};
-                script-src 'self' {{ config('cms.theme.csp.script-src') }} {!! cmshashes($page, 'config.javascript.data.text') !!};
+                style-src 'self' 'nonce-%%CMS_NONCE%%' {{ config('cms.theme.csp.style-src') }};
+                script-src 'self' 'nonce-%%CMS_NONCE%%' {{ config('cms.theme.csp.script-src') }};
                 font-src 'self';
             ">
         @endif
@@ -47,11 +45,13 @@
 
         @foreach($page->ancestorsAndSelf as $navItem)
             @if($text = cms($navItem, 'config.styles.data.text'))
-                <style>{!! $text !!}</style>
+                <style nonce="%%CMS_NONCE%%">
+                    {!! $text !!}
+                </style>
             @endif
         @endforeach
 
-        <script type="application/ld+json">
+        <script type="application/ld+json" nonce="%%CMS_NONCE%%">
             [{
                 "@@context": "https://schema.org",
                 "@@type": "WebSite",
@@ -224,13 +224,14 @@
 
         <link href="{{ cmstheme($page, 'pico.modal.min.css') }}" rel="preload" as="style">
         <link href="{{ cmstheme($page, 'cms-lazy.css') }}" rel="preload" as="style">
-        <script defer src="{{ cmstheme($page, 'csrf.js') }}"></script>
         <script defer src="{{ cmstheme($page, 'cms.js') }}"></script>
         @stack('foot')
 
         @foreach($page->ancestorsAndSelf as $navItem)
             @if($text = cms($navItem, 'config.javascript.data.text'))
-                <script>{!! $text !!}</script>
+                <script nonce="%%CMS_NONCE%%">
+                    {!! $text !!}
+                </script>
             @endif
         @endforeach
 
