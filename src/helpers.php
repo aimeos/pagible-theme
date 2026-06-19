@@ -246,10 +246,11 @@ if( !function_exists( 'cmsroute' ) )
     function cmsroute( \Aimeos\Cms\Models\Page $page ) : string
     {
         if( \Aimeos\Cms\Permission::can( 'page:view', \Illuminate\Support\Facades\Auth::user() ) ) {
-            return isset( $page->latest->data->to ) ? url( $page->latest->data->to ) : route( 'cms.page', ['path' => $page->latest?->data->path ?? $page->path] );
+            $to = $page->latest?->data->to ?? null;
+            return $to ? url( $to ) : route( 'cms.page', ['path' => $page->latest?->data->path ?? $page->path] );
         }
 
-        return isset( $page->to ) ? url( $page->to ) : route( 'cms.page', ['path' => $page->path] );
+        return $page->to ? url( $page->to ) : route( 'cms.page', ['path' => $page->path] );
     }
 }
 
