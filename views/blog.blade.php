@@ -22,7 +22,7 @@
     @else
         <div class="blog-items blog-{{ $layout }}" data-blog="{{ $data->{'parent-page'}?->value ?? '' }}">
             @foreach($action ?? [] as $item)
-                @include('cms::blog-item', ['item' => $item, 'stacked' => $layout === 'cards'])
+                @include('cms::blog-item', ['item' => $item, 'stacked' => $layout === 'cards', 'intro' => $layout === 'list'])
             @endforeach
         </div>
     @endif

@@ -1,4 +1,4 @@
-{{-- Article preview: expects $item (blog page) and $stacked (true = day/month date, false = inline date) --}}
+{{-- Article preview: expects $item (blog page), $stacked (true = day/month date, false = inline date) and $intro (show introduction text) --}}
 <a href="{{ route('cms.page', ['path' => $item->path]) }}" class="blog-item">
     @if($article = collect(cms($item, 'content'))->first(fn($el) => ($el->type ?? null) === 'article')?->data)
         @if($file = cms(cms($item, 'files'), $article->file?->id ?? null))
@@ -14,6 +14,9 @@
                 @endif
             </div>
             <h3>{{ cms($item, 'title') }}</h3>
+            @if(($intro ?? false) && ($text = $article->text ?? null))
+                <p class="intro">{{ str($text)->limit(240) }}</p>
+            @endif
         </div>
     @else
         <h3>{{ cms($item, 'title') }}</h3>

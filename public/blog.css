@@ -103,6 +103,16 @@
     font-size: calc(var(--pico-font-size) * 0.75);
 }
 
+.blog .blog-list .intro {
+    color: var(--pico-muted-color);
+    font-size: calc(var(--pico-font-size) * 0.7);
+    margin: 0.25rem 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 @media (min-width: 768px) {
     .blog .blog-default {
         flex-direction: row;
