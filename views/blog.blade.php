@@ -11,18 +11,18 @@
     @if($layout === 'default')
         <div class="blog-items blog-default" data-blog="{{ $data->{'parent-page'}?->value ?? '' }}">
             <div class="first">
-                @include('cms::blog-item', ['item' => $first, 'stacked' => true])
+                @include('cms::blog-item', ['item' => $first, 'layout' => 'cards'])
             </div>
             <div class="second">
                 @foreach($action?->skip(1) ?? [] as $item)
-                    @include('cms::blog-item', ['item' => $item, 'stacked' => false])
+                    @include('cms::blog-item', ['item' => $item, 'layout' => $layout])
                 @endforeach
             </div>
         </div>
     @else
         <div class="blog-items blog-{{ $layout }}" data-blog="{{ $data->{'parent-page'}?->value ?? '' }}">
             @foreach($action ?? [] as $item)
-                @include('cms::blog-item', ['item' => $item, 'stacked' => $layout === 'cards', 'intro' => $layout === 'list'])
+                @include('cms::blog-item', ['item' => $item, 'layout' => $layout])
             @endforeach
         </div>
     @endif
