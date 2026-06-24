@@ -27,6 +27,14 @@
     align-self: end;
 }
 
+.table-responsive .th:first-child {
+    text-align: start;
+}
+
+.table-responsive .table-row:first-child .th:first-child:not(.col) {
+    text-align: center;
+}
+
 .table-responsive .td {
     text-align: center;
     align-self: center;
