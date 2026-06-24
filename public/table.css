@@ -23,14 +23,13 @@
     font-size: calc(var(--pico-font-size) * 0.85);
     letter-spacing: 0.04em;
     text-transform: uppercase;
-}
-
-.table-responsive .th:first-child {
-    text-align: start;
+    text-align: center;
+    align-self: end;
 }
 
 .table-responsive .td {
     text-align: center;
+    align-self: center;
 }
 
 .table-responsive .th > *:first-child,
