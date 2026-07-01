@@ -10,7 +10,7 @@
 	@foreach(cms($data, 'items', []) as $item)
 		<figure class="testimonial-item">
 			<blockquote>
-				@markdown($item->text ?? '')
+				@text($item->text ?? '')
 			</blockquote>
 			<figcaption>
 				@if($file = cms($files, $item->file?->id ?? null))
