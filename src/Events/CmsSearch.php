@@ -13,7 +13,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 /**
  * Audit/metrics event for frontend searches.
  */
-final class Searched
+final class CmsSearch
 {
     use Dispatchable;
 

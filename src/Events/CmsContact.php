@@ -11,16 +11,15 @@ use Illuminate\Foundation\Events\Dispatchable;
 
 
 /**
- * Audit/metrics event for frontend page requests.
+ * Audit/metrics event for contact-form submissions.
  */
-final class Viewed
+final class CmsContact
 {
     use Dispatchable;
 
     public function __construct(
-        public readonly string $path,
-        public readonly string $domain = '',
-        public readonly int $status = 200,
+        public readonly string $email = '',
+        public readonly string $ip = '',
         public readonly float $durationMs = 0.0,
         public readonly string $tenant = '',
     ) {}
