@@ -9,6 +9,7 @@ namespace Tests;
 
 use Aimeos\Cms\Schema;
 use Aimeos\Cms\Theme;
+use Illuminate\Support\Facades\Blade;
 
 
 class ThemeTest extends ThemeTestAbstract
@@ -86,6 +87,13 @@ class ThemeTest extends ThemeTestAbstract
 
 		$this->assertArrayHasKey( 'cms', $all );
 		$this->assertIsArray( $all['cms'] );
+	}
+
+
+	public function testBladeTextDirectiveLineBreaks()
+	{
+		$this->assertEquals( "one<br>\ntwo", Blade::render( '@text($text)', ['text' => "one\ntwo"] ) );
+		$this->assertEquals( "one &amp; two<br>\n<strong>three</strong>\n", Blade::render( '@text($text)', ['text' => "one & two\n**three**"] ) );
 	}
 
 
