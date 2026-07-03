@@ -14,9 +14,7 @@
 					$rowidx === 0 && in_array($data->header ?? null, ['row', 'row+col']) ? 'th' : 'td'
 				}} {{
 					$rowidx === 0 && $colidx === 0 && in_array($data->header ?? null, ['col', 'row+col']) ? 'col' : ''
-				}}">
-					@text((string) $col)
-				</div>
+				}}">@text((string) $col)</div>
 			@endforeach
 		</div>
 	@endforeach
