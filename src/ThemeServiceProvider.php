@@ -83,7 +83,9 @@ class ThemeServiceProvider extends Provider
                     'html_input' => 'strip',
                     'allow_unsafe_links' => false,
                     'max_nesting_level' => 25,
-                    'block_separator' => ''
+                    'renderer' => [
+                        'block_separator' => ''
+                    ]
                 ]);
                 echo trim((string) \$__cmsMarkdown->convert($expression ?? ''));
             ?>";
@@ -101,7 +103,9 @@ class ThemeServiceProvider extends Provider
                             'html_input' => 'strip',
                             'allow_unsafe_links' => false,
                             'max_nesting_level' => 3,
-                            'block_separator' => ''
+                            'renderer' => [
+                                'block_separator' => ''
+                            ]
                         ]);
                         \$__cmsTextEnv->addExtension( new \\League\\CommonMark\\Extension\\InlinesOnly\\InlinesOnlyExtension() );
                         \$__cmsText = new \\League\\CommonMark\\MarkdownConverter( \$__cmsTextEnv );
