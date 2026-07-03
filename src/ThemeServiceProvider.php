@@ -82,7 +82,8 @@ class ThemeServiceProvider extends Provider
                 static \$__cmsMarkdown = new \League\CommonMark\GithubFlavoredMarkdownConverter([
                     'html_input' => 'strip',
                     'allow_unsafe_links' => false,
-                    'max_nesting_level' => 25
+                    'max_nesting_level' => 25,
+                    'block_separator' => ''
                 ]);
                 echo trim((string) \$__cmsMarkdown->convert($expression ?? ''));
             ?>";
@@ -98,7 +99,9 @@ class ThemeServiceProvider extends Provider
                     if( \$__cmsText === null ) {
                         \$__cmsTextEnv = new \\League\\CommonMark\\Environment\\Environment([
                             'html_input' => 'strip',
-                            'allow_unsafe_links' => false
+                            'allow_unsafe_links' => false,
+                            'max_nesting_level' => 3,
+                            'block_separator' => ''
                         ]);
                         \$__cmsTextEnv->addExtension( new \\League\\CommonMark\\Extension\\InlinesOnly\\InlinesOnlyExtension() );
                         \$__cmsText = new \\League\\CommonMark\\MarkdownConverter( \$__cmsTextEnv );
