@@ -50,7 +50,7 @@
 			</div>
 
 			@if($item->features ?? null)
-				<div class="features">
+				<div class="features text">
 					@markdown($item->features)
 				</div>
 			@endif
@@ -68,4 +68,3 @@
 		</div>
 	@endforeach
 </div>
-

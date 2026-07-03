@@ -90,10 +90,12 @@ class ThemeTest extends ThemeTestAbstract
 	}
 
 
-	public function testBladeTextDirectiveLineBreaks()
+	public function testBladeTextDirectiveDoesNotInsertBreakTags()
 	{
-		$this->assertEquals( "one<br>\ntwo", Blade::render( '@text($text)', ['text' => "one\ntwo"] ) );
-		$this->assertEquals( "one &amp; two<br>\n<strong>three</strong>\n", Blade::render( '@text($text)', ['text' => "one & two\n**three**"] ) );
+		$template = '@text($text){{-- no-break-tags --}}';
+
+		$this->assertEquals( "one\ntwo", Blade::render( $template, ['text' => "one\ntwo"], true ) );
+		$this->assertEquals( "one &amp; two\n<strong>three</strong>\n", Blade::render( $template, ['text' => "one & two\n**three**"], true ) );
 	}
 
 

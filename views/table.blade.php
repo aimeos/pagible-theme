@@ -9,7 +9,7 @@
 	@foreach($data->table ?? [] as $rowidx => $row)
 		<div class="table-row">
 			@foreach((array) $row as $colidx => $col)
-				<div class="table-col {{
+				<div class="table-col text {{
 					$colidx === 0 && in_array($data->header ?? null, ['col', 'row+col']) ||
 					$rowidx === 0 && in_array($data->header ?? null, ['row', 'row+col']) ? 'th' : 'td'
 				}} {{

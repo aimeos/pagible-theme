@@ -16,7 +16,9 @@
     <h1 class="title">{{ $data->title ?? '' }}</h1>
 
     @if($data->text ?? null)
-        @markdown($data->text)
+        <div class="text">
+            @markdown($data->text)
+        </div>
     @endif
 
     @if(($data->url ?? null) || ($data->{'url-alternative'} ?? null))

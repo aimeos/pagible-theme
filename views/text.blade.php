@@ -1,1 +1,3 @@
-@markdown($data->text ?? '')
+<div class="text">
+	@markdown($data->text ?? '')
+</div>
