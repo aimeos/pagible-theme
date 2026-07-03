@@ -45,12 +45,12 @@
 				</div>
 				<h3 class="name">{{ $item->name ?? '' }}</h3>
 				@if($item->text ?? null)
-					<p class="text">{{ $item->text }}</p>
+					<p class="cms-text">{{ $item->text }}</p>
 				@endif
 			</div>
 
 			@if($item->features ?? null)
-				<div class="features text">@markdown($item->features)</div>
+				<div class="features cms-text">@markdown($item->features)</div>
 			@endif
 
 			@if(($item->priceid ?? null) && Route::has('cms.cashier'))

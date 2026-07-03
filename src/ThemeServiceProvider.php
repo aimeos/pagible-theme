@@ -92,7 +92,7 @@ class ThemeServiceProvider extends Provider
             return "<?php
                 \$__cmsTextVal = $expression ?? '';
                 if( \$__cmsTextVal === '' || strpbrk( \$__cmsTextVal, '*_\`[]()!<>&\\\\~\"' ) === false ) {
-                    echo \$__cmsTextVal;
+                    echo trim((string) \$__cmsTextVal);
                 } else {
                     static \$__cmsText = null;
                     if( \$__cmsText === null ) {
@@ -103,7 +103,7 @@ class ThemeServiceProvider extends Provider
                         \$__cmsTextEnv->addExtension( new \\League\\CommonMark\\Extension\\InlinesOnly\\InlinesOnlyExtension() );
                         \$__cmsText = new \\League\\CommonMark\\MarkdownConverter( \$__cmsTextEnv );
                     }
-                    echo \$__cmsText->convert( \$__cmsTextVal );
+                    echo trim((string) \$__cmsText->convert( \$__cmsTextVal ));
                 }
             ?>";
         } );
