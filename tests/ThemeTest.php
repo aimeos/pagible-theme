@@ -99,6 +99,29 @@ class ThemeTest extends ThemeTestAbstract
 	}
 
 
+	public function testMarkdownDirectiveTrimsOuterBreaks()
+	{
+		$template = '<div class="text">@markdown($text)</div>';
+
+		$this->assertEquals( '<div class="text"><p>one</p></div>', Blade::render( $template, ['text' => 'one'], true ) );
+	}
+
+
+	public function testTextClassNodesAreInline()
+	{
+		foreach( glob( dirname( __DIR__ ) . '/views/*.blade.php' ) ?: [] as $path ) {
+			$view = file_get_contents( $path );
+
+			preg_match_all( '/<(?<tag>[a-z][a-z0-9-]*)\b[^>]*class="[^"]*\btext\b[^"]*"[^>]*>.*?<\/\k<tag>>/s', $view, $matches );
+
+			foreach( $matches[0] ?? [] as $node ) {
+				$this->assertStringNotContainsString( "\n", $node, $path );
+				$this->assertStringNotContainsString( "\r", $node, $path );
+			}
+		}
+	}
+
+
 	public function testGet()
 	{
 		$this->assertIsArray( Schema::get( 'cms' ) );

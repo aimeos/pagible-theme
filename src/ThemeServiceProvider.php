@@ -84,7 +84,7 @@ class ThemeServiceProvider extends Provider
                     'allow_unsafe_links' => false,
                     'max_nesting_level' => 25
                 ]);
-                echo \$__cmsMarkdown->convert($expression ?? '');
+                echo trim((string) \$__cmsMarkdown->convert($expression ?? ''));
             ?>";
         } );
 

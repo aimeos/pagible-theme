@@ -50,9 +50,7 @@
 			</div>
 
 			@if($item->features ?? null)
-				<div class="features text">
-					@markdown($item->features)
-				</div>
+				<div class="features text">@markdown($item->features)</div>
 			@endif
 
 			@if(($item->priceid ?? null) && Route::has('cms.cashier'))

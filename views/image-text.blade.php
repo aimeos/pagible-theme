@@ -14,7 +14,5 @@
 		}])
 	@endif
 
-	<div class="text">
-		@markdown($data->text ?? '')
-	</div>
+	<div class="text">@markdown($data->text ?? '')</div>
 </div>
