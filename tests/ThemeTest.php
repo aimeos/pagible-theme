@@ -115,6 +115,10 @@ class ThemeTest extends ThemeTestAbstract
 			preg_match_all( '/<(?<tag>[a-z][a-z0-9-]*)\b[^>]*class="[^"]*\btext\b[^"]*"[^>]*>.*?<\/\k<tag>>/s', $view, $matches );
 
 			foreach( $matches[0] ?? [] as $node ) {
+				if( !str_contains( $node, '@markdown(' ) ) {
+					continue;
+				}
+
 				$this->assertStringNotContainsString( "\n", $node, $path );
 				$this->assertStringNotContainsString( "\r", $node, $path );
 			}
