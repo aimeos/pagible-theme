@@ -4,25 +4,24 @@
 @endPushOnce
 
 @if($first = $action?->first())
-    @php($layout = $data->layout ?? 'default')
     @if($data->title ?? null)
         <h2>{{ $data->title }}</h2>
     @endif
-    @if($layout === 'default')
+    @if(($data->layout ?? 'default') === 'default')
         <div class="blog-items blog-default" data-blog="{{ $data->{'parent-page'}?->value ?? '' }}">
             <div class="first">
                 @include('cms::blog-item', ['item' => $first, 'layout' => 'cards'])
             </div>
             <div class="second">
                 @foreach($action?->skip(1) ?? [] as $item)
-                    @include('cms::blog-item', ['item' => $item, 'layout' => $layout])
+                    @include('cms::blog-item', ['item' => $item, 'layout' => $data->layout ?? 'default'])
                 @endforeach
             </div>
         </div>
     @else
-        <div class="blog-items blog-{{ $layout }}" data-blog="{{ $data->{'parent-page'}?->value ?? '' }}">
+        <div class="blog-items blog-{{ $data->layout ?? 'default' }}" data-blog="{{ $data->{'parent-page'}?->value ?? '' }}">
             @foreach($action ?? [] as $item)
-                @include('cms::blog-item', ['item' => $item, 'layout' => $layout])
+                @include('cms::blog-item', ['item' => $item, 'layout' => $data->layout ?? 'default'])
             @endforeach
         </div>
     @endif
