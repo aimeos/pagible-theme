@@ -1,6 +1,6 @@
-{{-- Article preview: expects $item (blog page), $layout (layout type) --}}
-<a href="{{ route('cms.page', ['path' => $item->path]) }}" class="blog-item">
-    @if($article = collect(cms($item, 'content'))->first(fn($el) => in_array($el->type ?? null, ['article', 'hero']))?->data)
+{{-- Article preview: expects $item (page), $layout (layout type) --}}
+<a href="{{ route('cms.page', ['path' => $item->path]) }}" class="list-item">
+    @if($article = collect(cms($item, 'content'))->first()?->data)
         @if($file = cms(cms($item, 'files'), $article->file?->id ?? null))
             @include('cms::pic', ['file' => $file])
         @endif
