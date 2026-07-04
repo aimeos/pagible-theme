@@ -11,18 +11,18 @@
         @if(($data->layout ?? 'default') === 'default')
             <div class="list-items list-default" data-list="{{ $data->{'parent-page'}?->value ?? '' }}">
                 <div class="first">
-                    @include('cms::list-item', ['item' => $first, 'layout' => 'cards'])
+                    @include('cms::list-item', ['item' => $first, 'layout' => 'cards', 'date' => false])
                 </div>
                 <div class="second">
                     @foreach($action?->skip(1) ?? [] as $item)
-                        @include('cms::list-item', ['item' => $item, 'layout' => $data->layout ?? 'default'])
+                        @include('cms::list-item', ['item' => $item, 'layout' => $data->layout ?? 'default', 'date' => false])
                     @endforeach
                 </div>
             </div>
         @else
             <div class="list-items list-{{ $data->layout ?? 'default' }}" data-list="{{ $data->{'parent-page'}?->value ?? '' }}">
                 @foreach($action ?? [] as $item)
-                    @include('cms::list-item', ['item' => $item, 'layout' => $data->layout ?? 'default'])
+                    @include('cms::list-item', ['item' => $item, 'layout' => $data->layout ?? 'default', 'date' => false])
                 @endforeach
             </div>
         @endif
