@@ -178,6 +178,7 @@ header nav details.dropdown summary:not([role]):active {
     color: var(--pico-contrast);
     background: none;
     box-shadow: none;
+    border:none;
 }
 
 header nav details summary::marker,
