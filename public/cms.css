@@ -171,6 +171,7 @@ header nav details > summary:hover {
 
 header nav ul.menu > li:not(:last-of-type) > a:hover,
 header nav ul.menu > li:not(:last-of-type) > a:focus,
+header nav details.dropdown summary:not([role]),
 header nav details.dropdown summary:not([role]):hover,
 header nav details.dropdown summary:not([role]):focus,
 header nav details.dropdown summary:not([role]):active {
