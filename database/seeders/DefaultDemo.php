@@ -55,6 +55,8 @@ class DefaultDemo extends AbstractDemo
 
     private string $element;
     private string $guideFile;
+    /** @var array<string, string> File IDs for fixed-ratio slideshow images */
+    private array $slideImages = [];
 
 
     /**
@@ -70,7 +72,7 @@ class DefaultDemo extends AbstractDemo
             'id' => $blogId,
             'lang' => 'en',
             'name' => 'Field notes',
-            'title' => 'Field Notes | Meridian Works',
+            'title' => 'Field Notes',
             'path' => 'blog',
             'tag' => 'blog',
             'type' => 'blog',
@@ -94,7 +96,7 @@ class DefaultDemo extends AbstractDemo
         $this->page( [
             'lang' => 'en',
             'name' => 'Decisions before deliverables',
-            'title' => 'Decisions Before Deliverables | Meridian Works',
+            'title' => 'Decisions Before Deliverables',
             'path' => 'decisions-before-deliverables',
             'tag' => 'article',
             'type' => 'blog',
@@ -136,7 +138,7 @@ class DefaultDemo extends AbstractDemo
         $this->page( [
             'lang' => 'en',
             'name' => 'How to run a steering meeting people can use',
-            'title' => 'How to Run a Steering Meeting People Can Use | Meridian Works',
+            'title' => 'How to Run a Steering Meeting People Can Use',
             'path' => 'how-to-run-a-steering-meeting-people-can-use',
             'tag' => 'article',
             'type' => 'blog',
@@ -171,7 +173,7 @@ class DefaultDemo extends AbstractDemo
         $this->page( [
             'lang' => 'en',
             'name' => 'The handover starts in week one',
-            'title' => 'The Handover Starts in Week One | Meridian Works',
+            'title' => 'The Handover Starts in Week One',
             'path' => 'the-handover-starts-in-week-one',
             'tag' => 'article',
             'type' => 'blog',
@@ -185,9 +187,9 @@ class DefaultDemo extends AbstractDemo
             ['id' => Utils::uid(), 'type' => 'slideshow', 'group' => 'main', 'data' => [
                 'title' => 'Ownership grows through the work',
                 'files' => [
-                    ['id' => $this->img( 'model' ), 'type' => 'file'],
-                    ['id' => $this->img( 'team' ), 'type' => 'file'],
-                    ['id' => $this->img( 'handover' ), 'type' => 'file'],
+                    ['id' => $this->slideImg( 'model' ), 'type' => 'file'],
+                    ['id' => $this->slideImg( 'team' ), 'type' => 'file'],
+                    ['id' => $this->slideImg( 'handover' ), 'type' => 'file'],
                 ],
             ]],
             ['id' => Utils::uid(), 'type' => 'table', 'group' => 'main', 'data' => [
@@ -210,7 +212,7 @@ class DefaultDemo extends AbstractDemo
         $this->page( [
             'lang' => 'en',
             'name' => 'When a project needs recovery, not more reporting',
-            'title' => 'When a Project Needs Recovery, Not More Reporting | Meridian Works',
+            'title' => 'When a Project Needs Recovery, Not More Reporting',
             'path' => 'when-a-project-needs-recovery-not-more-reporting',
             'tag' => 'article',
             'type' => 'blog',
@@ -358,7 +360,6 @@ class DefaultDemo extends AbstractDemo
                 'title' => 'Keep four records current',
             ]],
             ['id' => Utils::uid(), 'type' => 'cards', 'group' => 'main', 'data' => [
-                'title' => 'The project record',
                 'columns' => '4',
                 'cards' => [
                     ['title' => 'Decisions', 'text' => 'The choice, owner, date, evidence, conditions, and consequence.'],
@@ -768,5 +769,45 @@ class DefaultDemo extends AbstractDemo
 
         $this->addDocs( $home )
             ->addBlog( $home, $blogId );
+    }
+
+
+    /**
+     * Creates a fixed 2:1 slideshow image and returns its file ID.
+     *
+     * @param string $key Photo key from self::PHOTOS
+     * @return string File ID
+     */
+    protected function slideImg( string $key ) : string
+    {
+        if( !isset( $this->slideImages[$key] ) )
+        {
+            [$photo, $name, $desc] = self::PHOTOS[$key];
+            $base = 'https://images.unsplash.com/' . $photo;
+            $url = fn( int $w, int $h ) => $base . '?w=' . $w . '&h=' . $h . '&q=80&fm=jpg&fit=crop';
+
+            $data = [
+                'mime' => 'image/jpeg',
+                'lang' => 'en',
+                'name' => $name,
+                'path' => $url( 1500, 750 ),
+                'previews' => ['500' => $url( 500, 250 ), '1000' => $url( 1000, 500 )],
+                'description' => ['en' => $desc],
+            ];
+
+            $file = File::forceCreate( $data + ['editor' => 'demo'] );
+            $version = $file->versions()->forceCreate( [
+                'lang' => 'en',
+                'data' => $data,
+                'published' => true,
+                'editor' => 'demo',
+            ] );
+
+            $file->forceFill( ['latest_id' => $version->id] )->saveQuietly();
+            $file->publish( $version );
+            $this->slideImages[$key] = (string) $file->refresh()->id;
+        }
+
+        return $this->slideImages[$key];
     }
 }
