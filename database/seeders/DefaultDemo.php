@@ -439,9 +439,9 @@ class DefaultDemo extends AbstractDemo
         if( !isset( $this->element ) )
         {
             $cards = [
-                ['title' => 'Practice', 'text' => "- Operating model design\n- Service improvement\n- Delivery recovery"],
+                ['title' => 'Practice', 'text' => "- [Operating model design](/decisions-before-deliverables)\n- [Service improvement](/docs)\n- [Delivery recovery](/when-a-project-needs-recovery-not-more-reporting)"],
                 ['title' => 'Resources', 'text' => "- [Client handbook](/docs)\n- [Project governance](/docs/project-governance)\n- [Field notes](/blog)"],
-                ['title' => 'Contact', 'text' => "London and Berlin\n\n[hello@meridianworks.example](mailto:hello@meridianworks.example)"],
+                ['title' => 'Contact', 'text' => "- [Email Meridian Works](mailto:hello@meridianworks.example)\n- [Discuss an engagement](/#contact)\n- [Read the client handbook](/docs)"],
             ];
 
             $element = Element::forceCreate( [
