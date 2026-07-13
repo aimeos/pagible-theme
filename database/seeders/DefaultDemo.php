@@ -12,6 +12,7 @@ use Aimeos\Cms\Models\File;
 use Aimeos\Cms\Models\Page;
 use Aimeos\Cms\Utils;
 use Aimeos\Cms\Validation;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -55,6 +56,7 @@ class DefaultDemo extends AbstractDemo
 
     private string $element;
     private string $guideFile;
+    private string $logoFile;
     /** @var array<string, string> File IDs for fixed-ratio slideshow images */
     private array $slideImages = [];
 
@@ -527,6 +529,20 @@ class DefaultDemo extends AbstractDemo
     {
         $elementId = $this->element();
         $fileId = $this->file();
+        $logoId = $this->logoFile();
+
+        $config = [
+            'logo' => [
+                'type' => 'logo',
+                'files' => [$logoId],
+                'data' => ['file' => ['id' => $logoId, 'type' => 'file']],
+            ],
+            'logo-alternative' => [
+                'type' => 'logo-alternative',
+                'files' => [$logoId],
+                'data' => ['file' => ['id' => $logoId, 'type' => 'file']],
+            ],
+        ];
 
         $content = [
             ['id' => Utils::uid(), 'type' => 'hero', 'group' => 'main', 'data' => [
@@ -626,6 +642,7 @@ class DefaultDemo extends AbstractDemo
             'status' => 1,
             'cache' => 5,
             'editor' => 'demo',
+            'config' => $config,
             'meta' => $meta,
             'content' => $content,
         ] );
@@ -643,6 +660,7 @@ class DefaultDemo extends AbstractDemo
                 'cache' => 5,
             ],
             'aux' => [
+                'config' => $config,
                 'meta' => $meta,
                 'content' => $content,
             ],
@@ -650,7 +668,7 @@ class DefaultDemo extends AbstractDemo
             'editor' => 'demo',
         ] );
 
-        $version->files()->attach( array_unique( array_merge( [$fileId], $this->ids( $content ), $this->ids( $meta ) ) ) );
+        $version->files()->attach( array_unique( array_merge( [$fileId], $this->ids( $config ), $this->ids( $content ), $this->ids( $meta ) ) ) );
         $version->elements()->attach( $elementId );
         $page->forceFill( ['latest_id' => $version->id] )->saveQuietly();
         $page->publish( $version );
@@ -696,6 +714,65 @@ class DefaultDemo extends AbstractDemo
     {
         [$photo, $name, $desc] = self::PHOTOS[$key];
         return $this->image( $photo, $name, $desc );
+    }
+
+
+    /**
+     * Creates the Meridian Works SVG logo and returns its file ID.
+     *
+     * @return string File ID
+     */
+    protected function logoFile() : string
+    {
+        if( !isset( $this->logoFile ) )
+        {
+            $svg = <<<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 80" role="img" aria-labelledby="title desc">
+  <title id="title">Meridian Works logo</title>
+  <desc id="desc">Meridian Works wordmark with an abstract compass and letter M</desc>
+  <g fill="none" fill-rule="evenodd">
+    <circle cx="40" cy="40" r="29" stroke="#111827" stroke-width="2"/>
+    <path d="m40 6 7 18-7-4-7 4Z" fill="#DC2626"/>
+    <path d="m40 74-7-17 7 4 7-4Z" fill="#DC2626" fill-opacity=".75"/>
+    <path d="M19 54V27l21 20 21-20v27" stroke="#111827" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="m34 40 6 7 6-7" stroke="#DC2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="86" y="39" fill="#111827" font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="28" font-weight="700" letter-spacing="-.6">MERIDIAN</text>
+    <path d="M88 50h24" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+    <text x="122" y="58" fill="#505460" font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" font-weight="650" letter-spacing="5">WORKS</text>
+  </g>
+</svg>
+SVG;
+
+            $disk = Storage::disk( config( 'cms.disk', 'public' ) );
+            $path = rtrim( 'cms/' . $this->tenant, '/' ) . '/meridian-works-logo.svg';
+
+            if( !$disk->put( $path, $svg ) ) {
+                throw new \Aimeos\Cms\Exception( sprintf( 'Unable to store logo "%s"', $path ) );
+            }
+
+            $data = [
+                'mime' => 'image/svg+xml',
+                'lang' => 'en',
+                'name' => 'Meridian Works logo',
+                'path' => $path,
+                'previews' => ['500' => $path],
+                'description' => ['en' => 'Meridian Works wordmark with an abstract compass and letter M'],
+            ];
+
+            $file = File::forceCreate( $data + ['editor' => 'demo'] );
+            $version = $file->versions()->forceCreate( [
+                'lang' => 'en',
+                'data' => $data,
+                'published' => true,
+                'editor' => 'demo',
+            ] );
+
+            $file->forceFill( ['latest_id' => $version->id] )->saveQuietly();
+            $file->publish( $version );
+            $this->logoFile = (string) $file->refresh()->id;
+        }
+
+        return $this->logoFile;
     }
 
 
