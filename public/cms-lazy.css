@@ -250,7 +250,7 @@ footer.cms-content a:visited {
     color: var(--pico-contrast-inverse);
     text-decoration: none;
     display: inline-block;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
 }
 
 footer.cms-content a:hover {
