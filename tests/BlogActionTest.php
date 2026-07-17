@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @license MIT, https://opensource.org/license/mit
+ * @license LGPL, https://opensource.org/license/lgpl-3-0
  */
 
 
@@ -10,6 +10,7 @@ namespace Tests;
 use Aimeos\Cms\Actions\Blog;
 use Aimeos\Cms\Models\Page;
 use Aimeos\Cms\Resource;
+use Aimeos\Cms\Tenancy;
 use Database\Seeders\TestSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -36,6 +37,8 @@ class BlogActionTest extends ThemeTestAbstract
 
     public function testEditorPreviewLoadsImageFromDraft()
     {
+        Tenancy::$callback = fn() => 'demo';
+
         $blog = Page::where( 'tag', 'blog' )->firstOrFail();
         $article = Page::where( 'tag', 'article' )->firstOrFail();
 

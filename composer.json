@@ -4,10 +4,10 @@
     "keywords": ["laravel", "cms", "theme", "frontend"],
     "homepage": "https://pagible.com",
     "type": "library",
-    "license": "MIT",
+    "license": "LGPL-3.0-only",
     "require": {
         "php": "^8.2",
-        "aimeos/pagible-core": "*@dev",
+        "aimeos/pagible-core": "0.11.*",
         "league/commonmark": "^2.6"
     },
     "require-dev": {

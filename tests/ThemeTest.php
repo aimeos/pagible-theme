@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @license MIT, https://opensource.org/license/mit
+ * @license LGPL, https://opensource.org/license/lgpl-3-0
  */
 
 
@@ -9,10 +9,7 @@ namespace Tests;
 
 use Aimeos\Cms\Schema;
 use Aimeos\Cms\Theme;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Storage;
 
 
 class ThemeTest extends ThemeTestAbstract
@@ -91,47 +88,6 @@ class ThemeTest extends ThemeTestAbstract
 		$this->assertArrayHasKey( 'cms', $all );
 		$this->assertIsArray( $all['cms'] );
 	}
-
-
-    public function testDiscoverRefreshesUploadedSchemas()
-    {
-        Storage::fake( 'themes' );
-        config( ['cms.theme.disk' => 'themes', 'cms.theme.ttl' => 60] );
-
-        $disk = Storage::disk( 'themes' );
-        $disk->put( 'custom/schema.json', json_encode( [
-            'label' => 'Custom',
-            'content' => ['first' => ['fields' => []]],
-        ] ) );
-        $disk->put( 'custom/preview.webp', 'preview' );
-
-        $theme = Schema::get( 'custom' );
-
-        $this->assertSame( 'Custom', $theme['label'] ?? null );
-        $this->assertNotNull( $theme['preview'] ?? null );
-        $this->assertArrayHasKey( 'custom::first', $theme['content'] ?? [] );
-
-        $this->assertArrayHasKey( 'custom::first', Schema::schemas( 'custom', 'content' ) );
-
-        $disk->put( 'custom/schema.json', json_encode( [
-            'label' => 'Changed',
-            'content' => ['second' => ['fields' => []]],
-        ] ) );
-        Cache::forget( 'cms-themes_test' );
-
-        $schemas = Schema::schemas( 'custom', 'content' );
-
-        $this->assertArrayHasKey( 'custom::second', $schemas );
-        $this->assertArrayNotHasKey( 'custom::first', $schemas );
-    }
-
-
-    public function testRateLimiters()
-    {
-        $this->assertNotNull( RateLimiter::limiter( 'cms-contact' ) );
-        $this->assertNotNull( RateLimiter::limiter( 'cms-search' ) );
-        $this->assertNotNull( RateLimiter::limiter( 'cms-sitemap' ) );
-    }
 
 
 	public function testBladeTextDirectiveDoesNotInsertBreakTags()
@@ -226,8 +182,6 @@ class ThemeTest extends ThemeTestAbstract
 		$this->assertArrayHasKey( 'meta', $schemas );
 		$this->assertArrayHasKey( 'heading', $schemas['content'] );
 		$this->assertArrayHasKey( 'meta-tags', $schemas['meta'] );
-		$this->assertArrayHasKey( 'description', $schemas['meta']['meta-tags']['fields'] );
-		$this->assertArrayHasKey( 'description', $schemas['meta']['social-media']['fields'] );
 	}
 
 

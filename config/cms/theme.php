@@ -71,17 +71,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Minimum search term length
-    |--------------------------------------------------------------------------
-    |
-    | Minimum number of characters accepted by the public search form and
-    | endpoint. Limited to 1-10.
-    |
-    */
-    'min-search' => max( 1, min( (int) env( 'CMS_SEARCH_MIN', 2 ), 10 ) ),
-
-    /*
-    |--------------------------------------------------------------------------
     | Sitemap URL path
     |--------------------------------------------------------------------------
     |
@@ -90,16 +79,4 @@ return [
     |
     */
     'sitemap' => env( 'CMS_SITEMAP', 'sitemap' ),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Frontend watch events
-    |--------------------------------------------------------------------------
-    |
-    | Enables structured audit events for frontend search queries and contact
-    | submissions when "cms.watch.channel" is configured. Pulse observations are
-    | listener-driven and don't require this flag.
-    |
-    */
-    'watch' => env( 'CMS_THEME_WATCH', false ),
 ];

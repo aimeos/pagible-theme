@@ -1,13 +1,12 @@
 <?php
 
 /**
- * @license MIT, https://opensource.org/license/mit
+ * @license LGPL, https://opensource.org/license/lgpl-3-0
  */
 
 
 namespace Aimeos\Cms\Controllers;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -28,20 +27,6 @@ use Aimeos\Cms\Theme;
 
 class PageController extends Controller
 {
-    /**
-     * Issues a CSRF token and starts the session on demand.
-     *
-     * Cacheable pages can omit the per-session token from their HTML and fetch it
-     * only when a visitor actually submits a form. See theme/public/csrf.js.
-     *
-     * @return JsonResponse JSON response containing the CSRF token
-     */
-    public function csrf() : JsonResponse
-    {
-        return response()->json( ['token' => csrf_token()] );
-    }
-
-
     /**
      * Show the page for a given URL.
      *
@@ -68,8 +53,11 @@ class PageController extends Controller
         $key = Page::key( $path, $domain );
         $np = empty( $request->input() );
 
-        if( $np && $request->isMethod( 'GET' ) && ( $html = $cache->get( $key ) ) ) {
-            return $this->cached( $html );
+        if( $np && $request->isMethod( 'GET' ) && ( $html = $cache->get( $key ) ) )
+        {
+            return response( $this->inject( $html ), 200 )
+                ->header( 'Content-Type', 'text/html' )
+                ->header( 'Expires', substr( $html, -29 ) );
         }
 
         $page = Page::with( [
@@ -101,15 +89,10 @@ class PageController extends Controller
             $cache->put( $key, $html . '<!-- ' . $expires, now()->addMinutes( (int) $page->cache ) );
         }
 
-        $response = ( new Response( $html, 200 ) )->header( 'Content-Type', 'text/html' );
+        $response = ( new Response( $this->inject( $html ), 200 ) )->header( 'Content-Type', 'text/html' );
 
-        if( $request->isMethod( 'GET' ) )
-        {
-            $maxage = (int) $page->cache * 60;
-
-            $response->header( 'Expires', $expires )->header( 'Cache-Control', $page->cache
-                ? "public, s-maxage={$maxage}, max-age=0, must-revalidate"
-                : 'no-store, private' );
+        if( $request->isMethod( 'GET' ) ) {
+            $response->header( 'Expires', $expires );
         }
 
         return $response;
@@ -117,26 +100,23 @@ class PageController extends Controller
 
 
     /**
-     * Builds the public, CDN-cacheable response for stored page HTML.
+     * Replaces the cache-safe CSRF token and CSP nonce placeholders with fresh per-request values.
      *
-     * The cached HTML is final and static: CSP hashes are already resolved and no
-     * session-bound CSRF token is embedded (forms fetch it on demand). It is therefore
-     * returned verbatim with a "public" cache policy and no Set-Cookie header. The
-     * shared-cache lifetime is derived from the trailing expiry marker so the edge
-     * cache and the server cache expire together.
+     * The rendered page HTML is cached verbatim and served to every visitor, so it must not embed
+     * a session-bound CSRF token or a reusable CSP nonce. The layout/forms emit placeholders and
+     * this injects a unique nonce and the current request's CSRF token into each response (on both
+     * cache miss and cache hit).
      *
-     * @param string $html Cached page HTML with trailing expiry marker
-     * @return Response Public, cacheable response
+     * @param string $html Rendered HTML containing the placeholders
+     * @return string HTML with per-request token and nonce
      */
-    protected function cached( string $html ) : Response
+    protected function inject( string $html ) : string
     {
-        $expires = substr( $html, -29 );
-        $maxage = max( 0, strtotime( $expires ) - time() );
-
-        return ( new Response( $html, 200 ) )
-            ->header( 'Content-Type', 'text/html' )
-            ->header( 'Cache-Control', "public, s-maxage={$maxage}, max-age=0, must-revalidate" )
-            ->header( 'Expires', $expires );
+        return str_replace(
+            ['%%CMS_NONCE%%', '%%CMS_CSRF%%'],
+            [base64_encode( random_bytes( 16 ) ), (string) csrf_token()],
+            $html
+        );
     }
 
 
@@ -194,7 +174,7 @@ class PageController extends Controller
         $views = [$theme . '::layouts.' . $type, 'cms::layouts.' . $type, 'cms::layouts.page'];
         $html = view()->first( $views, ['page' => $page, 'content' => $content, 'theme' => $theme] )->render();
 
-        return ( new Response( $html, 200 ) )
+        return ( new Response( $this->inject( $html ), 200 ) )
             ->header( 'Content-Type', 'text/html' )
             ->header( 'Cache-Control', 'private, max-age=0' );
     }

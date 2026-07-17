@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @license MIT, https://opensource.org/license/mit
+ * @license LGPL, https://opensource.org/license/lgpl-3-0
  */
 
 
@@ -45,11 +45,7 @@ class SitemapControllerTest extends ThemeTestAbstract
     public function testIndexExcludesNoindex()
     {
         \Aimeos\Cms\Models\Page::where( 'path', 'hidden' )->firstOrFail()
-            ->forceFill( ['meta' => ['robots' => [
-                'type' => 'robots',
-                'data' => ['index' => 'noindex'],
-                'files' => [],
-            ]]] )
+            ->forceFill( ['meta' => [['type' => 'robots', 'data' => ['index' => 'noindex']]]] )
             ->saveQuietly();
 
         $controller = new \Aimeos\Cms\Controllers\SitemapController();

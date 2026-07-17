@@ -187,15 +187,11 @@ footer.cms-content .cards .card-list {
 }
 
 footer.cms-content .cards .card-item {
-    background-color: transparent;
-    border: 0;
-    border-radius: 0;
-    color: var(--pico-contrast-inverse);
     padding: 0;
 }
 
 footer.cms-content .cards .title {
-    color: var(--pico-contrast-inverse);
+    color: var(--pico-muted-color);
     font-size: calc(var(--pico-font-size) * 0.65);
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -203,26 +199,17 @@ footer.cms-content .cards .title {
     text-transform: uppercase;
 }
 
-footer.cms-content .cards :is(.text, .cms-text) {
+footer.cms-content .cards .text {
     color: var(--pico-contrast-inverse);
     font-size: calc(var(--pico-font-size) * 0.7);
 }
 
-footer.cms-content .cards :is(.text, .cms-text) p {
-    color: var(--pico-contrast-inverse);
+footer.cms-content .cards .text p {
     line-height: 1.75;
     margin: 0;
 }
 
-footer.cms-content .cards :is(.text, .cms-text) a,
-footer.cms-content .cards :is(.text, .cms-text) a:visited,
-footer.cms-content .cards :is(.text, .cms-text) a:hover,
-footer.cms-content .cards :is(.text, .cms-text) a:focus,
-footer.cms-content .cards :is(.text, .cms-text) a:active {
-    text-decoration: none;
-}
-
-footer.cms-content .cards :is(.text, .cms-text) a:hover {
+footer.cms-content .cards .text a:hover {
     color: var(--pico-muted-color);
 }
 
@@ -250,7 +237,7 @@ footer.cms-content a:visited {
     color: var(--pico-contrast-inverse);
     text-decoration: none;
     display: inline-block;
-    padding: 0.5rem 0;
+    padding: 0.5rem;
 }
 
 footer.cms-content a:hover {

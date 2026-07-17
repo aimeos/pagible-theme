@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @license MIT, https://opensource.org/license/mit
+ * @license LGPL, https://opensource.org/license/lgpl-3-0
  */
 
 
@@ -132,33 +132,6 @@ if( !function_exists( 'cmsfile' ) )
     function cmsfile( \Aimeos\Cms\Models\Page $page, string $fileId ) : ?object
     {
         return cms( cms( $page, 'files' ), $fileId );
-    }
-}
-
-
-if( !function_exists( 'cmshashes' ) )
-{
-    /**
-     * Build the space-separated CSP hash source list for the inline blocks stored
-     * at the given config path on the page and its ancestors.
-     *
-     * Each inline <style>/<script> the layout emits from this same config path is
-     * allowed by its SHA-256 hash, so pages need no per-request CSP nonce and stay
-     * byte-identical and cacheable. The layout MUST emit the block content raw and
-     * with no surrounding whitespace inside the tags, otherwise the browser-computed
-     * hash will not match the value returned here.
-     *
-     * @param \Aimeos\Cms\Models\Page $page The CMS page
-     * @param string $path Config path of the inline text, e.g. "config.styles.data.text"
-     * @return string Space-separated 'sha256-...' source expressions for the CSP
-     */
-    function cmshashes( \Aimeos\Cms\Models\Page $page, string $path ) : string
-    {
-        return $page->ancestorsAndSelf
-            ->map( fn( $item ) => cms( $item, $path ) )
-            ->filter()
-            ->map( fn( $text ) => "'sha256-" . base64_encode( hash( 'sha256', (string) $text, true ) ) . "'" )
-            ->implode( ' ' );
     }
 }
 
@@ -368,14 +341,8 @@ if( !function_exists( 'cmsviews' ) )
             return ['cms::invalid'];
         }
 
-        $type = (string) $item->type;
+        $type = str_contains( $item->type, '::' ) ? $item->type : 'cms::' . $item->type;
 
-        [$theme, $type] = str_contains( $type, '::' )
-            ? explode( '::', $type, 2 )
-            : [cms( $page, 'theme' ) ?: 'cms', $type];
-
-        return $theme === 'cms'
-            ? ['cms::' . $type, 'cms::invalid']
-            : [$theme . '::' . $type, 'cms::' . $type, 'cms::invalid'];
+        return [$type, 'cms::invalid'];
     }
 }

@@ -35,7 +35,6 @@
 }
 
 .table-responsive .td {
-    color: var(--pico-color);
     text-align: center;
     align-self: center;
 }

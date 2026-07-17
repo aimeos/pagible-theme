@@ -29,14 +29,19 @@
     --pico-h3-color: #FFFFFF;
     --pico-h4-color: #FFFFFF;
     --pico-muted-color: #9CA3AF;
-    --pico-muted-border-color: #CCD3DF;
+    --pico-muted-border-color: #374151;
     --pico-muted-background-color: #1F2937;
     --pico-contrast: #FFFFFF;
-    --pico-contrast-background: #111827;
     --pico-contrast-inverse: #111827;
     --pico-contrast-border: #374151;
     --pico-contrast-hover-border: #4B5563;
     --pico-box-shadow: none;
+}
+
+.cms-content > .heading + .text,
+.cms-content > .heading + .cards,
+.cms-content > .heading + .image {
+    margin-top: -4rem;
 }
 
 .heading h1,
@@ -79,5 +84,11 @@
 @media screen and (min-width: 768px) {
     .cms-content .container {
         padding: 6rem min(5%, 2rem);
+    }
+
+    .cms-content > .heading + .text,
+    .cms-content > .heading + .cards,
+    .cms-content > .heading + .image {
+        margin-top: -5rem;
     }
 }
