@@ -2,6 +2,10 @@
 
 namespace Aimeos\Cms;
 
+use Aimeos\Cms\Events\CmsContact;
+use Aimeos\Cms\Events\CmsSearch;
+use Aimeos\Cms\Listeners\ContactLogListener;
+use Aimeos\Cms\Listeners\SearchLogListener;
 use Aimeos\Cms\Schema;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Blade;
@@ -16,13 +20,13 @@ class ThemeServiceProvider extends Provider
     {
         $basedir = dirname( __DIR__ );
 
-        RateLimiter::for( 'cms-sitemap', fn( $request ) =>
-            Limit::perMinutes( 5, 1 )->by( $request->ip() )
-        );
-
         $this->loadBladeDirectives();
+        $this->rateLimiter();
+        Schema::source( fn() => Theme::discover() );
         Schema::register( $basedir, 'cms' );
+
         View::addNamespace( 'cms', $basedir . '/views' );
+
         $this->loadJsonTranslationsFrom( $basedir . '/lang' );
 
         $this->publishes( [$basedir . '/public' => public_path( 'vendor/cms/theme' )], 'cms-theme' );
@@ -33,7 +37,16 @@ class ThemeServiceProvider extends Provider
             $this->loadRoutesFrom( $basedir . '/routes/theme.php' );
         });
 
+        $this->watch();
         $this->console();
+    }
+
+    protected function watch() : void
+    {
+        Watch::listen( [
+            CmsSearch::class => SearchLogListener::class,
+            CmsContact::class => ContactLogListener::class,
+        ], 'cms.theme.watch' );
     }
 
     protected function console() : void
@@ -51,6 +64,21 @@ class ThemeServiceProvider extends Provider
     public function register()
     {
         $this->mergeConfigFrom( dirname( __DIR__ ) . '/config/cms/theme.php', 'cms.theme' );
+    }
+
+    protected function rateLimiter(): void
+    {
+        RateLimiter::for( 'cms-contact', fn( $request ) =>
+            Limit::perMinute( 2 )->by( $request->ip() )
+        );
+
+        RateLimiter::for( 'cms-search', fn( $request ) =>
+            Limit::perMinute( 60 )->by( $request->ip() )
+        );
+
+        RateLimiter::for( 'cms-sitemap', fn( $request ) =>
+            Limit::perMinutes( 5, 1 )->by( $request->ip() )
+        );
     }
 
     protected function loadBladeDirectives(): void
