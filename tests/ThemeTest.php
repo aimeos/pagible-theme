@@ -136,10 +136,10 @@ class ThemeTest extends ThemeTestAbstract
 
 	public function testBladeTextDirectiveDoesNotInsertBreakTags()
 	{
-		$template = '@text($text){{-- no-break-tags --}}';
+		$template = '@text($text){{-- no-break-tags --}}@text($suffix)';
 
-		$this->assertEquals( "one\ntwo", Blade::render( $template, ['text' => "one\ntwo"], true ) );
-		$this->assertEquals( "one &amp; two\n<strong>three</strong>", Blade::render( $template, ['text' => "one & two\n**three**"], true ) );
+		$this->assertEquals( "one\ntwo!", Blade::render( $template, ['text' => "one\ntwo", 'suffix' => '!'], true ) );
+		$this->assertEquals( "one &amp; two\n<strong>three</strong>!", Blade::render( $template, ['text' => "one & two\n**three**", 'suffix' => '!'], true ) );
 	}
 
 
@@ -153,9 +153,9 @@ class ThemeTest extends ThemeTestAbstract
 
 	public function testMarkdownDirectiveTrimsOuterBreaks()
 	{
-		$template = '<div class="text">@markdown($text)</div>';
+		$template = '<div class="text">@markdown($text)</div><div class="text">@markdown($text)</div>';
 
-		$this->assertEquals( '<div class="text"><p>one</p></div>', Blade::render( $template, ['text' => 'one'], true ) );
+		$this->assertEquals( '<div class="text"><p>one</p></div><div class="text"><p>one</p></div>', Blade::render( $template, ['text' => 'one'], true ) );
 	}
 
 
