@@ -143,6 +143,29 @@ class ThemeTest extends ThemeTestAbstract
 	}
 
 
+	public function testLayoutTypeDefaultsToPage(): void
+	{
+		$paths = glob( dirname( __DIR__, 2 ) . '/themes/*/views/layouts/main.blade.php' ) ?: [];
+		$paths[] = dirname( __DIR__ ) . '/views/layouts/main.blade.php';
+
+		foreach( $paths as $path ) {
+			$this->assertStringContainsString(
+				"type-{{ cms(\$page, 'type') ?: 'page' }}",
+				(string) file_get_contents( $path ),
+				$path
+			);
+		}
+
+		$html = Blade::render(
+			"<body class=\"type-{{ cms(\$page, 'type') ?: 'page' }}\"></body>",
+			['page' => (object) ['type' => '']],
+			true
+		);
+
+		$this->assertSame( '<body class="type-page"></body>', $html );
+	}
+
+
 	public function testMarkdownDirectiveTrimsListBreaks(): void
 	{
 		$template = '<div class="text">@markdown($text)</div>';
