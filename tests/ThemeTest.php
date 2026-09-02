@@ -10,6 +10,8 @@ namespace Tests;
 use Aimeos\Cms\Schema;
 use Aimeos\Cms\Theme;
 use Aimeos\Cms\Validation;
+use Aimeos\Cms\Models\Page;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\RateLimiter;
@@ -46,6 +48,17 @@ class ThemeTest extends ThemeTestAbstract
 		$this->assertArrayHasKey( 'heading', $schemas );
 		$this->assertArrayHasKey( 'text', $schemas );
 		$this->assertArrayHasKey( 'fields', $schemas['heading'] );
+	}
+
+
+	public function testContactRoute()
+	{
+		$page = ( new \Aimeos\Cms\Models\Page() )->forceFill( ['id' => 'page-id', 'lang' => 'en'] );
+		$data = (object) ['id' => 'contact-id'];
+
+		$html = view( 'cms::contact', compact( 'data', 'page' ) )->render();
+
+		$this->assertStringContainsString( 'action="http://localhost/cmsapi/contact"', $html );
 	}
 
 
@@ -95,6 +108,68 @@ class ThemeTest extends ThemeTestAbstract
 
 		$this->assertStringNotContainsString( '<h3', $html );
 		$this->assertStringContainsString( '<a href="/contact">Contact</a>', $html );
+	}
+
+
+	public function testListItemUsesIndexedArticleImage() : void
+	{
+		$page = ( new Page() )->forceFill( [
+			'content' => [[
+				'type' => 'article',
+				'files' => ['image'],
+				'data' => ['text' => 'Article introduction'],
+			]],
+			'created_at' => Carbon::parse( '2026-08-23 12:00:00' ),
+			'domain' => 'localhost',
+			'lang' => 'en',
+			'path' => 'article',
+			'title' => 'Article',
+		] );
+		$file = (object) [
+			'id' => 'image',
+			'name' => 'Article image',
+			'path' => 'https://example.com/article.jpg',
+			'previews' => [],
+		];
+		$page->setRelation( 'files', collect( ['image' => $file] ) );
+
+		$html = view( 'cms::list-item', ['item' => $page, 'layout' => 'list', 'page' => $page] )->render();
+
+		$this->assertStringContainsString( '<picture', $html );
+		$this->assertStringContainsString( 'https://example.com/article.jpg', $html );
+	}
+
+
+	public function testArticleRendersGalleryAndLegacyImageFields() : void
+	{
+		$page = ( new Page() )->forceFill( [
+			'created_at' => Carbon::parse( '2026-08-23 12:00:00' ),
+			'updated_at' => Carbon::parse( '2026-08-24 12:00:00' ),
+			'id' => 'page',
+			'lang' => 'en',
+			'title' => 'Article',
+		] );
+		$file = (object) [
+			'id' => 'image',
+			'name' => 'Article image',
+			'path' => 'https://example.com/article.jpg',
+			'previews' => [],
+		];
+		$files = collect( ['image' => $file] );
+		$fields = [
+			'gallery' => ['files' => [(object) ['id' => 'image', 'type' => 'file']]],
+			'legacy' => ['file' => (object) ['id' => 'image', 'type' => 'file']],
+		];
+
+		foreach( $fields as $name => $field )
+		{
+			$data = (object) ( $field + ['text' => 'Article introduction'] );
+			$html = view( 'cms::article', compact( 'data', 'files', 'page' ) )->render();
+
+			$this->assertStringContainsString( '<picture class="cover"', $html, $name );
+			$this->assertStringContainsString( 'https://example.com/article.jpg', $html, $name );
+			$this->assertStringContainsString( '"image":', $html, $name );
+		}
 	}
 
 

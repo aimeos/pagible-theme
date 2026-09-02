@@ -1,7 +1,9 @@
 {{-- Article preview: expects $item (page), $layout (layout type), $date (include date) --}}
-<a href="{{ route('cms.page', ['path' => $item->path]) }}" class="list-item">
-    @if($article = collect(cms($item, 'content'))->first()?->data)
-        @if($file = cms(cms($item, 'files'), $article->file?->id ?? null))
+<a href="{{ cmsroute('cms.page', ['path' => $item->path], $item->domain ?? null) }}" class="list-item">
+    @if($element = collect(cms($item, 'content'))->first())
+        @php($article = $element->data)
+        @php($fileId = $article->file?->id ?? collect((array) ($element->files ?? []))->first())
+        @if($file = cms(cms($item, 'files'), $fileId))
             @include('cms::pic', ['file' => $file])
         @endif
         <div class="content">
