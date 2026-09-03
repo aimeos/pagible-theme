@@ -94,6 +94,41 @@ class DemoTest extends ThemeTestAbstract
     }
 
 
+    public function testSeedNews(): void
+    {
+        $this->assertThemeImages(
+            'news',
+            \Aimeos\Cms\NewsServiceProvider::class,
+            \Database\Seeders\NewsDemo::class,
+            1,
+            'photo-1565793298595-6a879b1d9492',
+        );
+
+        Tenancy::$callback = fn() => 'news';
+        app()->forgetInstance( Tenancy::class );
+
+        $home = Page::where( 'tag', 'root' )->firstOrFail();
+        $content = collect( (array) $home->content );
+        $hero = $content->firstWhere( 'type', 'hero' );
+        $topStories = $content->firstWhere( 'id', 'top-stories' );
+        $mostRead = $content->firstWhere( 'id', 'most-read' );
+
+        $this->assertSame( 'Europe’s industrial rebuild enters its decisive phase', $hero->data->title );
+        $this->assertFalse( isset( $hero->data->{'url-alternative'} ) );
+        $this->assertSame( 4, $topStories->data->columns );
+        $this->assertCount( 4, (array) $topStories->data->cards );
+        $this->assertSame( 4, $mostRead->data->columns );
+        $this->assertCount( 4, (array) $mostRead->data->cards );
+
+        $response = $this->get( '/' );
+
+        $response->assertOk();
+        $response->assertSee( 'id="top-stories"', false );
+        $response->assertSee( 'id="most-read"', false );
+        $response->assertSee( 'Work &amp; Careers', false );
+    }
+
+
     public function testSeedTheme(): void
     {
         ( new DefaultDemo( 'luxury', 'luxury' ) )->seed();
