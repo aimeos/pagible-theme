@@ -21,13 +21,7 @@
 			@endif
 			<div class="card-text">
 				@if($card->title ?? null)
-					<h3 class="title">
-						@if($url)
-							<a href="{{ $url }}">{{ $card->title }}</a>
-						@else
-							{{ $card->title }}
-						@endif
-					</h3>
+					<h3 class="title">@if($url)<a href="{{ $url }}">@endif{{ $card->title }}@if($url)</a>@endif</h3>
 				@endif
 				@if($card->text ?? null)
 					<div class="cms-text">@markdown($card->text)</div>
