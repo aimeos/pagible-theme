@@ -9,7 +9,6 @@ namespace Aimeos\Cms\Actions;
 
 use Aimeos\Cms\Models\File;
 use Aimeos\Cms\Models\Page;
-use Aimeos\Cms\Models\Version;
 use Illuminate\Http\Request;
 
 
@@ -72,8 +71,7 @@ class Blog
             $used = collect( $fileIds( $page ) )->mapWithKeys( fn( $id ) => [$id => $files->get( $id )] )->filter();
 
             $page->setRelation( 'files', $used );
-            $latest = $editor ? $page->getRelation( 'latest' ) : null;
-            $latest instanceof Version ? $latest->setRelation( 'files', $used ) : null;
+            $editor && $page->latest ? $page->latest->setRelation( 'files', $used ) : null;
         } );
 
         return $pages;
